@@ -19,13 +19,13 @@ public class SupplierController {
     private final ManageSupplierUseCase supplierUseCase;
 
     @PostMapping
-    public ResponseEntity<SupplierResponse> createSupplier(@RequestBody @Valid CreateSupplierCommand command) {
+    public ResponseEntity<SupplierResponse> createSupplier(@RequestBody @Valid CreateSupplierCommand command) throws DomainException {
         SupplierResponse response = supplierUseCase.createSupplier(command);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SupplierResponse> getSupplier(@PathVariable Long id) {
+    public ResponseEntity<SupplierResponse> getSupplier(@PathVariable Long id) throws DomainException {
         return ResponseEntity.ok(supplierUseCase.getSupplier(id));
     }
 

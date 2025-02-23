@@ -19,7 +19,7 @@ public class SupplierDtoMapper {
                 command.phone(),
                 command.email(),
                 Status.ACTIVO,
-                command.createdAT(),
+                command.createdAt(),
                 command.updatedAt()
         );
     }

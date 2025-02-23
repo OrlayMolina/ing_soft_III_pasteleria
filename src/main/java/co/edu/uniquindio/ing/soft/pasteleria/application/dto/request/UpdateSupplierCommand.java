@@ -12,6 +12,6 @@ public record UpdateSupplierCommand(
         String phone,
         String email,
         Status status,
-        LocalDateTime createdAT,
-        LocalDateTime updatedAT) {
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt) {
 }

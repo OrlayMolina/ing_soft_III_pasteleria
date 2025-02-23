@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.dto.request;
 
+import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.Status;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,8 +24,10 @@ public record CreateSupplierCommand(
         @Email(message = "Invalid email format")
         String email,
 
+        Status status,
+
         @NotNull(message = "Created date is required")
-        LocalDateTime createdAT,
+        LocalDateTime createdAt,
 
         @NotNull(message = "Updated date is required")
         LocalDateTime updatedAt) {
