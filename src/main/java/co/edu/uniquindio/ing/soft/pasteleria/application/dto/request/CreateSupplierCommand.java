@@ -17,18 +17,18 @@ public record CreateSupplierCommand(
         @NotBlank(message = "La dirección es requerida")
         String address,
 
-        @NotBlank(message = "El telefono es requerido")
+        @NotBlank(message = "El teléfono es requerido")
         String phone,
 
-        @NotBlank(message = "Email is required")
-        @Email(message = "Invalid email format")
+        @NotBlank(message = "El Correo electrónico es requerido")
+        @Email(message = "El formato del correo es incorrecto")
         String email,
 
         Status status,
 
-        @NotNull(message = "Created date is required")
+        @NotNull(message = "Fecha de creación del proveedor es requerida")
         LocalDateTime createdAt,
 
-        @NotNull(message = "Updated date is required")
+        @NotNull(message = "Fecha de actualización del proveedor es requerida")
         LocalDateTime updatedAt) {
 }
