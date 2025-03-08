@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity;
 
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.Status;
+import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +30,7 @@ public class SupplierEntity {
     private String name;
 
     @NotBlank
-    @Column(name = "supplierID", nullable = false)
+    @Column(name = "supplier_id", nullable = false)
     @Size(min = 3, max = 50)
     private String supplierID;
 
@@ -59,4 +60,7 @@ public class SupplierEntity {
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SupplyEntity> supplies;
 
+    @ManyToOne
+    @JoinColumn(name = "modify_by", nullable = false)
+    private UserEntity userModify;
 }

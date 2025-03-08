@@ -1,7 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.ports.output;
 
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
-import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supplier;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supply;
 
 import java.util.List;

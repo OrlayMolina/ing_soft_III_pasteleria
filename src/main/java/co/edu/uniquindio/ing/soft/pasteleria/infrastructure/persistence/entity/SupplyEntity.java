@@ -50,4 +50,8 @@ public class SupplyEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id", nullable = false)
     private SupplierEntity supplier;
+
+    @ManyToOne
+    @JoinColumn(name = "modify_by", nullable = false)
+    private UserEntity userModify;
 }

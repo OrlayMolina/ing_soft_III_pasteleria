@@ -13,7 +13,6 @@ public class SupplyDtoMapper {
                 command.id(),
                 command.name(),
                 command.supplierID(),
-                command.supplier(),
                 command.price(),
                 command.entryDate(),
                 command.expirationDate(),
