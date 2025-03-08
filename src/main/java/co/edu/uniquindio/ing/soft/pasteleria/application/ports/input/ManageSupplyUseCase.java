@@ -1,10 +1,7 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.ports.input;
 
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplierCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplyCommand;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateSupplierCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateSupplyCommand;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplierResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 
