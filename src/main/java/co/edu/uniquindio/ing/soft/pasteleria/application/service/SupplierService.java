@@ -70,7 +70,6 @@ public class SupplierService implements ManageSupplierUseCase {
             existingSupplier.setPhone(command.phone());
             existingSupplier.setEmail(command.email());
             existingSupplier.setStatus(command.status());
-            existingSupplier.setCreatedAt(command.createdAt());
             existingSupplier.setUpdatedAt(command.updatedAt());
 
             Supplier updatedSupplier = supplierPort.saveSupplier(existingSupplier);

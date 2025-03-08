@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class SupplierPersistenceAdapter implements SupplierPort {
 
     private final SupplierJpaRepository supplierJpaRepository;
-    private final SupplierPersistenceMapper persistenceMapper;  // Mapper de persistencia
+    private final SupplierPersistenceMapper persistenceMapper;
 
     @Override
     public Supplier saveSupplier(Supplier supplier) throws DomainException {
