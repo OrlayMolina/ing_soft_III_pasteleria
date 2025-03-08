@@ -8,6 +8,8 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageSuppl
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.SupplierPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supplier;
+import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.SupplierEntity;
+import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.SupplierJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,15 @@ public class SupplierService implements ManageSupplierUseCase {
 
     private final SupplierPort supplierPort;
     private final SupplierDtoMapper supplierDtoMapper;
+    private final SupplierJpaRepository supplierJpaRepository;
 
     @Override
     public SupplierResponse createSupplier(CreateSupplierCommand command) throws DomainException {
+
+        Optional<SupplierEntity> supplierOptional = supplierJpaRepository.findBySupplierID(command.supplierID());
+        if(supplierOptional.isPresent()){
+            throw new DomainException("Ya existe un proveedor con el mismo número de ID.");
+        }
         Supplier supplier = new Supplier(
                 null,
                 command.name(),

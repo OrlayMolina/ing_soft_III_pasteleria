@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Random;
+
+import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.generateRandomNumericId;
 
 @SpringBootTest
 public class SupplierServiceTests {
@@ -20,10 +23,11 @@ public class SupplierServiceTests {
 
     @Test
     public void createSupplier() throws DomainException {
+        String randomSupplierID = generateRandomNumericId(9);
 
         CreateSupplierCommand command = new CreateSupplierCommand(
                 "Harina as de oros",
-                "9000456123",
+                randomSupplierID,
                 "Huila",
                 "+577425689",
                 "asdeoros@gmail.com",
