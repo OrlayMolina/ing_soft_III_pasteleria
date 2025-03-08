@@ -18,7 +18,7 @@ import static co.edu.uniquindio.ing.soft.pasteleria.domain.constant.Constants.SU
 public class Supplier {
     private Long id;
     private String name;
-    private String supplierID;
+    private String supplierDocument;
     private String address;
     private String phone;
     private String email;
@@ -26,7 +26,7 @@ public class Supplier {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Supplier(Long id, String name, String supplierID, String address,
+    public Supplier(Long id, String name, String supplierDocument, String address,
                     String phone, String email, Status status, LocalDateTime createdAt,
                     LocalDateTime updatedAt) throws DomainException {
         validateName(name);
@@ -34,7 +34,7 @@ public class Supplier {
 
         this.id = id;
         this.name = name;
-        this.supplierID = supplierID;
+        this.supplierDocument = supplierDocument;
         this.address = address;
         this.phone = phone;
         this.email = email;
@@ -47,14 +47,14 @@ public class Supplier {
         if (isActive()) {
             return this;
         }
-        return new Supplier(id, name, supplierID, address, phone, email, Status.ACTIVO, createdAt, updatedAt);
+        return new Supplier(id, name, supplierDocument, address, phone, email, Status.ACTIVO, createdAt, updatedAt);
     }
 
     public Supplier deactivate() throws DomainException {
         if (!isActive()) {
             return this;
         }
-        return new Supplier(id, name, supplierID, address, phone, email, Status.INACTIVO, createdAt, updatedAt);
+        return new Supplier(id, name, supplierDocument, address, phone, email, Status.INACTIVO, createdAt, updatedAt);
     }
 
     public boolean isActive(){

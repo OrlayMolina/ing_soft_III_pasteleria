@@ -28,7 +28,7 @@ public class SupplierDtoMapper {
         return new SupplierResponse(
                 supplier.getId(),
                 supplier.getName(),
-                supplier.getSupplierID(),
+                supplier.getSupplierDocument(),
                 supplier.getAddress(),
                 supplier.getPhone(),
                 supplier.getEmail(),

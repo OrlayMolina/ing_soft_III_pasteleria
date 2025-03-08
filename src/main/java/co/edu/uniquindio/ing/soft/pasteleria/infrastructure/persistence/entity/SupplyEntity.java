@@ -27,6 +27,9 @@ public class SupplyEntity {
     private String name;
     @Column(name = "price", nullable = false)
     private Double price;
+    @NotBlank
+    @Column(name = "supplier_document", nullable = false)
+    private String supplierDocument;
 
     @Column(name = "entry_date")
     private LocalDate entryDate;

@@ -11,7 +11,7 @@ public class SupplierPersistenceMapper {
         SupplierEntity entity = new SupplierEntity();
         entity.setId(supplier.getId());
         entity.setName(supplier.getName());
-        entity.setSupplierID(supplier.getSupplierID());
+        entity.setSupplierID(supplier.getSupplierDocument());
         entity.setAddress(supplier.getAddress());
         entity.setPhone(supplier.getPhone());
         entity.setEmail(supplier.getEmail());
