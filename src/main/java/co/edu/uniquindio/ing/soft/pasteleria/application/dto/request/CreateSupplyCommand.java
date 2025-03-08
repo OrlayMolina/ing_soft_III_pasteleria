@@ -9,12 +9,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CreateSupplyCommand(
-        @Positive
-        Long id,
         @NotBlank(message = "El nombre del insumo requerido")
         String name,
         String supplierID,
-        Supplier supplier,
         @Positive
         Double price,
         @NotNull(message = "La fecha de entrada del insumo es requerido")
@@ -26,5 +23,6 @@ public record CreateSupplyCommand(
         @NotNull(message = "Fecha de creación de un insumo es requerida")
         LocalDateTime createdAt,
         @NotNull(message = "Fecha de actualización de un insumo es requerida")
-        LocalDateTime updatedAt) {
+        LocalDateTime updatedAt,
+        Long userModify) {
 }

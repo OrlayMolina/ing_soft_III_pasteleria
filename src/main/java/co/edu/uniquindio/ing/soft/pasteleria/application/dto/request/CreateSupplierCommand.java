@@ -30,5 +30,6 @@ public record CreateSupplierCommand(
         LocalDateTime createdAt,
 
         @NotNull(message = "Fecha de actualización del proveedor es requerida")
-        LocalDateTime updatedAt) {
+        LocalDateTime updatedAt,
+        Long userModify) {
 }

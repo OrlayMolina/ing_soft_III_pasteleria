@@ -44,7 +44,7 @@ public class SupplyPersistenceAdapter implements SupplyPort {
     }
 
     @Override
-    public List<Supply> findAllSupply() {
+    public List<Supply> findAllSupplies() {
         return supplyJpaRepository.findAll().stream()
                 .map(entity -> {
                     try {

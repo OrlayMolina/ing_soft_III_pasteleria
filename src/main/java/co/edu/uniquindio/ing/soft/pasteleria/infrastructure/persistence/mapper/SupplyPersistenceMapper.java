@@ -13,6 +13,7 @@ public class SupplyPersistenceMapper {
         entity.setId(supply.getId());
         entity.setName(supply.getName());
         entity.setPrice(supply.getPrice());
+        entity.setSupplierDocument(supply.getSupplierDocument());
         entity.setEntryDate(supply.getEntryDate());
         entity.setExpirationDate(supply.getExpirationDate());
         entity.setQuantity(supply.getQuantity());
@@ -23,7 +24,6 @@ public class SupplyPersistenceMapper {
 
     public Supply toDomain(SupplyEntity entity) throws DomainException {
         return new Supply(
-                entity.getId(),
                 entity.getName(),
                 entity.getSupplierDocument(),
                 entity.getPrice(),
@@ -31,7 +31,8 @@ public class SupplyPersistenceMapper {
                 entity.getExpirationDate(),
                 entity.getQuantity(),
                 entity.getCreatedAt(),
-                entity.getUpdatedAt()
+                entity.getUpdatedAt(),
+                entity.getUserModify().getId()
         );
     }
 }

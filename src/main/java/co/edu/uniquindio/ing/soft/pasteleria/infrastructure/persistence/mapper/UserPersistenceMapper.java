@@ -14,7 +14,6 @@ public class UserPersistenceMapper {
         }
 
         UserEntity entity = new UserEntity();
-        entity.setId(user.getId());
         entity.setTypeDocument(user.getTypeDocument());
         entity.setPhone(user.getPhone());
         entity.setPosition(user.getPosition());
@@ -26,6 +25,7 @@ public class UserPersistenceMapper {
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
         entity.setStatus(user.getStatus());
+        entity.setIsAdmin(user.isAdmin());
         entity.setCreatedAt(user.getCreatedAt());
         entity.setUpdatedAt(user.getUpdatedAt());
 
@@ -38,8 +38,8 @@ public class UserPersistenceMapper {
         }
 
         return new User(
-                entity.getId(),
                 entity.getTypeDocument(),
+                entity.getDocumentNumber(),
                 entity.getPhone(),
                 entity.getPosition(),
                 entity.getSalary(),
@@ -50,6 +50,7 @@ public class UserPersistenceMapper {
                 entity.getEmail(),
                 entity.getPassword(),
                 entity.getStatus(),
+                entity.getIsAdmin(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

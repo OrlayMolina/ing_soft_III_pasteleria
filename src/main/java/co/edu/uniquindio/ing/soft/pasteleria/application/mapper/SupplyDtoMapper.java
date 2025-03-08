@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class SupplyDtoMapper {
     public Supply toModel(CreateSupplyCommand command) throws DomainException {
         return new Supply(
-                command.id(),
                 command.name(),
                 command.supplierID(),
                 command.price(),
@@ -18,7 +17,8 @@ public class SupplyDtoMapper {
                 command.expirationDate(),
                 command.quantity(),
                 command.createdAt(),
-                command.updatedAt()
+                command.updatedAt(),
+                command.userModify()
         );
     }
 

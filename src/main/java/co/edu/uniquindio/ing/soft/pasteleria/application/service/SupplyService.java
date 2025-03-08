@@ -10,6 +10,7 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.SupplierPo
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.SupplyPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supply;
+import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.SupplyEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.SupplierJpaRepository;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.SupplyJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,20 +39,20 @@ public class SupplyService implements ManageSupplyUseCase {
         }
 
         // Validar que el proveedor existe
-        if (!supplierPort.existsSupplierBySupplierID(command.supplierDocument())) {
-            throw new DomainException("El proveedor con ID " + command.supplierDocument() + " no existe.");
+        if (!supplierPort.existsSupplierBySupplierID(command.supplierID())) {
+            throw new DomainException("El proveedor con ID " + command.supplierID() + " no existe.");
         }
 
         Supply supply = new Supply(
-                null,
                 command.name(),
+                command.supplierID(),
                 command.price(),
-                command.supplierDocument(),
                 command.entryDate(),
                 command.expirationDate(),
                 command.quantity(),
                 command.createdAt(),
-                command.updatedAt()
+                command.updatedAt(),
+                command.userModify()
         );
 
         try {
