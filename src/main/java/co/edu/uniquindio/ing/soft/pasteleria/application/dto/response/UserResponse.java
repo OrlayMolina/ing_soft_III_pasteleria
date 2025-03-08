@@ -6,10 +6,10 @@ import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.TypeDocument;
 import java.time.LocalDateTime;
 
 public record UserResponse(
-        Long id,
         TypeDocument typeDocument,
+        String documentNumber,
         String phone,
-        Long position,
+        String position,
         Float salary,
         String first_name,
         String second_name,
@@ -18,6 +18,7 @@ public record UserResponse(
         String email,
         String password,
         Status status,
+        Boolean isAdmin,
         LocalDateTime createdAt,
         LocalDateTime updatedAt) {
 }

@@ -12,4 +12,5 @@ public interface SupplierPort {
     void deleteSupplierById(Long id);
     List<Supplier> findAllSuppliers();
     boolean existsSupplierById(Long id);
+    boolean existsSupplierBySupplierID(String supplierID);
 }

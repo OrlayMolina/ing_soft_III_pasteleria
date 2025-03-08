@@ -6,18 +6,20 @@ import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.TypeDocument;
 import java.time.LocalDateTime;
 
 public record CreateUserCommand(
-        Long id,
         TypeDocument typeDocument,
+        String documentNumber,
         String phone,
-        Long position,
+        String position,
         Float salary,
-        String first_name,
-        String second_name,
-        String last_name,
-        String second_last_name,
+        String firstName,
+        String secondName,
+        String lastName,
+        String secondLastName,
         String email,
         String password,
         Status status,
+        Boolean isAdmin,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt) {
+        LocalDateTime updatedAt,
+        Long userModify) {
 }

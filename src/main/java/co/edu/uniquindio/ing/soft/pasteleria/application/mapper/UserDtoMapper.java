@@ -10,18 +10,19 @@ import org.springframework.stereotype.Component;
 public class UserDtoMapper {
     public User toModel(CreateUserCommand command) throws DomainException {
         return new User(
-                command.id(),
                 command.typeDocument(),
+                command.documentNumber(),
                 command.phone(),
                 command.position(),
                 command.salary(),
-                command.first_name(),
-                command.second_name(),
-                command.last_name(),
-                command.second_last_name(),
+                command.firstName(),
+                command.secondName(),
+                command.lastName(),
+                command.secondLastName(),
                 command.email(),
                 command.password(),
                 command.status(),
+                command.isAdmin(),
                 command.createdAt(),
                 command.updatedAt()
         );
@@ -29,8 +30,8 @@ public class UserDtoMapper {
 
     public UserResponse toResponse(User user) throws DomainException {
         return new UserResponse(
-                user.getId(),
                 user.getTypeDocument(),
+                user.getDocumentNumber(),
                 user.getPhone(),
                 user.getPosition(),
                 user.getSalary(),
@@ -41,6 +42,7 @@ public class UserDtoMapper {
                 user.getEmail(),
                 user.getPassword(),
                 user.getStatus(),
+                user.isAdmin(),
                 user.getCreatedAt(),
                 user.getUpdatedAt()
         );

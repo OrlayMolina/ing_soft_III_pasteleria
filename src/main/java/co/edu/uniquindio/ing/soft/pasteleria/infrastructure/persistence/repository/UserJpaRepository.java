@@ -3,5 +3,10 @@ package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.reposit
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByDocumentNumber(String documentNumber);
 }

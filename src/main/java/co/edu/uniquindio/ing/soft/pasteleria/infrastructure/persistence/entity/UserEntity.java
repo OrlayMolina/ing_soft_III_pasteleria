@@ -24,11 +24,14 @@ public class UserEntity {
     @Column(name = "type_document", nullable = false)
     private TypeDocument typeDocument;
 
+    @Column(name = "document_number")
+    private String documentNumber;
+
     @Column(name = "phone", nullable = false)
     private String phone;
 
     @Column(name = "position")
-    private Long position;
+    private String position;
 
     @Column(name = "salary")
     private Float salary;
@@ -53,6 +56,9 @@ public class UserEntity {
 
     @Column(name = "status", nullable = false)
     private Status status;
+
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

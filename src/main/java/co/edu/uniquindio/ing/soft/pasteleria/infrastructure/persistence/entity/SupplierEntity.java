@@ -61,6 +61,6 @@ public class SupplierEntity {
     private List<SupplyEntity> supplies;
 
     @ManyToOne
-    @JoinColumn(name = "modify_by", nullable = false)
+    @JoinColumn(name = "modify_by")
     private UserEntity userModify;
 }

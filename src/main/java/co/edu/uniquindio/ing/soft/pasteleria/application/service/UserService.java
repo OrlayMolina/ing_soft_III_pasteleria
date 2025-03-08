@@ -34,8 +34,8 @@ public class UserService implements ManageUserUseCase {
         }
 
         User user = new User(
-                null,
                 command.typeDocument(),
+                command.documentNumber(),
                 command.phone(),
                 command.position(),
                 command.salary(),
@@ -46,6 +46,7 @@ public class UserService implements ManageUserUseCase {
                 command.email(),
                 command.password(),
                 command.status(),
+                command.isAdmin(),
                 command.createdAt(),
                 command.updatedAt()
         );

@@ -10,6 +10,7 @@ public interface SupplyPort {
     Supply saveSupply(Supply supply) throws DomainException;
     Optional<Supply> findSupplyById(Long id);
     void deleteSupplyById(Long id);
-    List<Supply> findAllSupply();
+    List<Supply> findAllSupplies();
     boolean existsSupplyById(Long id);
+
 }
