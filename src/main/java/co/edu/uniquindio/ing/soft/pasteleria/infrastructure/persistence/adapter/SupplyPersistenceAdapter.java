@@ -27,6 +27,22 @@ public class SupplyPersistenceAdapter implements SupplyPort {
     }
 
     @Override
+    public Supply updateSupply(Supply supply) throws DomainException {
+        SupplyEntity existingEntity = supplyJpaRepository.findById(supply.getId())
+                .orElseThrow(() -> new DomainException("Insumo no encontrado"));
+
+        existingEntity.setName(supply.getName());
+        existingEntity.setPrice(supply.getPrice());
+        existingEntity.setEntryDate(supply.getEntryDate());
+        existingEntity.setExpirationDate(supply.getExpirationDate());
+        existingEntity.setQuantity(supply.getQuantity());
+        existingEntity.setUpdatedAt(supply.getUpdatedAt());
+
+        SupplyEntity updatedEntity = supplyJpaRepository.save(existingEntity);
+        return persistenceMapper.toDomain(updatedEntity);
+    }
+
+    @Override
     public Optional<Supply> findSupplyById(Long id) {
         return supplyJpaRepository.findById(id)
                 .map(entity -> {
@@ -60,5 +76,10 @@ public class SupplyPersistenceAdapter implements SupplyPort {
     @Override
     public boolean existsSupplyById(Long id) {
         return supplyJpaRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<SupplyEntity> existsSupplyBySupplierDocument(String supplierDocument) {
+        return supplyJpaRepository.findBySupplierDocument(supplierDocument);
     }
 }

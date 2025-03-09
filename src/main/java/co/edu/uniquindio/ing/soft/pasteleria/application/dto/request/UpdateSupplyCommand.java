@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record UpdateSupplyCommand(
+        Long id,
         @NotBlank(message = "El nombre del insumo requerido")
         String name,
         @Positive
