@@ -42,7 +42,7 @@ public class SupplierServiceTests {
          if(!users.isEmpty()){
              user = getRandomElement(users);
          }
-        System.out.println("***********************************" + user + "***************************************");
+
         if(user == null){
             String randomUserDocument = generateRandomNumericId(10);
 
@@ -97,7 +97,6 @@ public class SupplierServiceTests {
                     user.getId()
             );
 
-            System.out.printf("**********" + String.valueOf(command) + "***************");
             SupplierResponse response = manageSupplierUseCase.createSupplier(command);
             Assertions.assertNotNull(response);
         }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/supplies")
 @AllArgsConstructor
+@RequestMapping("/api/supplies")
 public class SupplyController {
 
     private final ManageSupplyUseCase supplyUseCase;

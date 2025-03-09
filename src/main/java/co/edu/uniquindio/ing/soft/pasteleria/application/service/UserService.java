@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -44,7 +46,7 @@ public class UserService implements ManageUserUseCase {
                 command.lastName(),
                 command.secondLastName(),
                 command.email(),
-                command.password(),
+                encriptarPassword(command.password()),
                 command.status(),
                 command.isAdmin(),
                 command.createdAt(),
