@@ -12,6 +12,7 @@ COPY ./pom.xml /root
 COPY ./.mvn /root/.mvn
 COPY ./mvnw /root
 
+RUN chmod +x ./mvnw
 # Descargar las dependencias
 RUN ./mvnw dependency:resolve -Dmaven.wagon.http.retryHandler.count=3
 
