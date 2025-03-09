@@ -13,13 +13,13 @@ COPY ./.mvn /root/.mvn
 COPY ./mvnw /root
 
 # Descargar las dependencias
-RUN ./mvnw dependency:go-offline
+RUN ./mvnw dependency:resolve -Dmaven.wagon.http.retryHandler.count=3
 
 # Copiar codigo fuente dentro del contenedor
 COPY ./src /root/src
 
 # Construir nuestra aplicación
-RUN ./mvnw clean install -DskipTests
+RUN ./mvnw clean install
 
 # Levantar nuestra aplicacion cuando el contenedor inicie
 ENTRYPOINT ["java","-jar","/root/target/pasteleria-0.0.1-SNAPSHOT.jar"]
