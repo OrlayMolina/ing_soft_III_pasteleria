@@ -1,18 +1,6 @@
 version: '3.9'
 
 services:
-  spring-back-pasteleria:
-    image: spring-back-pasteleria
-    container_name: spring-back-container
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - back-network
-    depends_on:
-      - postgres
 
   postgres:
     image: postgres:latest
@@ -32,6 +20,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+
+  spring-back-pasteleria:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-back-container
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/pasteleria_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - back-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 networks:
   back-network:

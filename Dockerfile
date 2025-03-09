@@ -19,7 +19,7 @@ RUN ./mvnw dependency:resolve -Dmaven.wagon.http.retryHandler.count=3
 COPY ./src /root/src
 
 # Construir nuestra aplicación
-RUN ./mvnw clean install
+RUN ./mvnw clean install -DskipTests
 
 # Levantar nuestra aplicacion cuando el contenedor inicie
 ENTRYPOINT ["java","-jar","/root/target/pasteleria-0.0.1-SNAPSHOT.jar"]
