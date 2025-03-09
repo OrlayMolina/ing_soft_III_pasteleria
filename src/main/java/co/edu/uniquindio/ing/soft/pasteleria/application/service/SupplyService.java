@@ -38,22 +38,14 @@ public class SupplyService implements ManageSupplyUseCase {
             throw new DomainException("Ya existe un insumo con el mismo nombre.");
         }
 
-        // Validar que el proveedor existe
-        if (!supplierPort.existsSupplierBySupplierID(command.supplierID())) {
+        // Validar que el proveedor existe y obtener su ID numérico
+        Long supplierId = supplierPort.getSupplierIdBySupplierID(command.supplierID());
+        if (supplierId == null) {
             throw new DomainException("El proveedor con ID " + command.supplierID() + " no existe.");
         }
 
-        Supply supply = new Supply(
-                command.name(),
-                command.supplierID(),
-                command.price(),
-                command.entryDate(),
-                command.expirationDate(),
-                command.quantity(),
-                command.createdAt(),
-                command.updatedAt(),
-                command.userModify()
-        );
+        // Usar el método actualizado, pasando el supplierId
+        Supply supply = supplyDtoMapper.toModel(command, supplierId);
 
         try {
             Supply savedSupply = supplyPort.saveSupply(supply);
@@ -79,7 +71,7 @@ public class SupplyService implements ManageSupplyUseCase {
             existingSupply.setExpirationDate(command.expirationDate());
             existingSupply.setUpdatedAt(command.updatedAt());
 
-            Supply updatedSupply = supplyPort.saveSupply(existingSupply);
+            Supply updatedSupply = supplyPort.updateSupply(existingSupply);
             return supplyDtoMapper.toResponse(updatedSupply);
 
         } catch (DomainException e) {

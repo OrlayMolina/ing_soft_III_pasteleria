@@ -14,6 +14,7 @@ public class Supply {
     private Long id;
     private String name;
     private String supplierDocument;
+    private Long supplierId;
     private Double price;
     private LocalDate entryDate;
     private LocalDate expirationDate;
@@ -22,11 +23,28 @@ public class Supply {
     private LocalDateTime updatedAt;
     private Long userModify;
 
-    public Supply(String name, String supplierDocument, Double price, LocalDate entryDate,
+    public Supply(String name, String supplierDocument, Long supplierId, Double price, LocalDate entryDate,
                   LocalDate expirationDate, int quantity, LocalDateTime createdAt,
                   LocalDateTime updatedAt, Long userModify) {
         this.name = name;
         this.supplierDocument = supplierDocument;
+        this.supplierId = supplierId;
+        this.price = price;
+        this.entryDate = entryDate;
+        this.expirationDate = expirationDate;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.userModify = userModify;
+    }
+
+    public Supply(Long id, String name, String supplierDocument, Long supplierId, Double price,
+                  LocalDate entryDate, LocalDate expirationDate, int quantity,
+                  LocalDateTime createdAt, LocalDateTime updatedAt, Long userModify) {
+        this.id = id;
+        this.name = name;
+        this.supplierDocument = supplierDocument;
+        this.supplierId = supplierId;
         this.price = price;
         this.entryDate = entryDate;
         this.expirationDate = expirationDate;

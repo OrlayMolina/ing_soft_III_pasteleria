@@ -34,9 +34,9 @@ public class SupplyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupply(@PathVariable Long id) {
+    public ResponseEntity<String> deleteSupply(@PathVariable Long id) {
         supplyUseCase.deleteSupply(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body("Insumo eliminado correctamente");
     }
 
     @GetMapping("/{id}")

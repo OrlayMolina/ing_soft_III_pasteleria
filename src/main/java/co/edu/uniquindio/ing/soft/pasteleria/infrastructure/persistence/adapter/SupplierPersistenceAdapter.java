@@ -70,4 +70,11 @@ public class SupplierPersistenceAdapter implements SupplierPort {
     public boolean existsSupplierBySupplierID(String supplierID) {
         return supplierJpaRepository.findBySupplierID(supplierID).isPresent();
     }
+
+    @Override
+    public Long getSupplierIdBySupplierID(String supplierID) {
+        return supplierJpaRepository.findBySupplierID(supplierID)
+                .map(SupplierEntity::getId)
+                .orElse(null);
+    }
 }

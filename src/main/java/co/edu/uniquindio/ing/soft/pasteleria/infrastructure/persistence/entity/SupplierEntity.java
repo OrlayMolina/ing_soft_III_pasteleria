@@ -30,7 +30,7 @@ public class SupplierEntity {
     private String name;
 
     @NotBlank
-    @Column(name = "supplier_id", nullable = false)
+    @Column(name = "supplier_document", nullable = false)
     @Size(min = 3, max = 50)
     private String supplierID;
 

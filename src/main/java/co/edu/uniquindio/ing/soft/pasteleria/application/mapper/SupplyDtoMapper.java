@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SupplyDtoMapper {
-    public Supply toModel(CreateSupplyCommand command) throws DomainException {
+    public Supply toModel(CreateSupplyCommand command, Long supplierId) throws DomainException {
         return new Supply(
                 command.name(),
                 command.supplierID(),
+                supplierId,
                 command.price(),
                 command.entryDate(),
                 command.expirationDate(),

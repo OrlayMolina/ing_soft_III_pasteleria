@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface SupplyJpaRepository extends JpaRepository<SupplyEntity, Long> {
     Optional<SupplyEntity> findByName(String name);
-
+    Optional<SupplyEntity> findBySupplierDocument(String supplierDocument);
 }

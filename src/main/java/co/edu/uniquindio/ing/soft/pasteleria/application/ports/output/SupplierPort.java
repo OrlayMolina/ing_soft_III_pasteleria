@@ -13,4 +13,5 @@ public interface SupplierPort {
     List<Supplier> findAllSuppliers();
     boolean existsSupplierById(Long id);
     boolean existsSupplierBySupplierID(String supplierID);
+    Long getSupplierIdBySupplierID(String supplierID);
 }
