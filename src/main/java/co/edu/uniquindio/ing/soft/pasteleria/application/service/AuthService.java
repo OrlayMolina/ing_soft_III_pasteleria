@@ -24,8 +24,12 @@ public class AuthService implements ManageAuthUseCase {
 
     @Override
     public TokenDTO logIn(LoginDTO loginDTO) throws DomainException {
-        Optional<UserEntity> userEntity = userJpaRepository.findByEmail(loginDTO.correo());
+        Optional<UserEntity> userEntity = userJpaRepository.findByEmail(loginDTO.email());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (userEntity.isEmpty()) {
+            throw new DomainException("Usuario no encontrado");
+        }
 
         if( !passwordEncoder.matches(loginDTO.password(), userEntity.get().getPassword()) ) {
             throw new DomainException("La contraseña es incorrecta");
@@ -37,7 +41,8 @@ public class AuthService implements ManageAuthUseCase {
     private Map<String, Object> construirClaims(UserEntity userEntity) {
         return Map.of(
                 "user_id", userEntity.getId(),
-                "correo", userEntity.getEmail()
+                "email", userEntity.getEmail(),
+                "isAdmin", userEntity.getIsAdmin()
         );
     }
 }

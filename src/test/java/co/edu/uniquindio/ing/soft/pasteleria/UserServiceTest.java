@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.generateRandomNumericId;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.getRandomElement;
 
@@ -30,7 +31,6 @@ public class UserServiceTest {
     @Test
     public void createUserAdminTest() throws DomainException {
         String randomUserDocument = generateRandomNumericId(10);
-        System.out.println("*************************** " + randomUserDocument + " *************************");
         CreateUserCommand command = new CreateUserCommand(
                 TypeDocument.CC,
                 randomUserDocument,
