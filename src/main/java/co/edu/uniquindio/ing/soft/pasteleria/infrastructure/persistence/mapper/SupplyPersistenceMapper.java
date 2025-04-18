@@ -19,6 +19,7 @@ public class SupplyPersistenceMapper {
         entity.setEntryDate(supply.getEntryDate());
         entity.setExpirationDate(supply.getExpirationDate());
         entity.setQuantity(supply.getQuantity());
+        entity.setMinimumStock(supply.getMinimumStock());
         entity.setCreatedAt(supply.getCreatedAt());
         entity.setUpdatedAt(supply.getUpdatedAt());
 
@@ -40,18 +41,30 @@ public class SupplyPersistenceMapper {
     }
 
     public Supply toDomain(SupplyEntity entity) throws DomainException {
+        // Manejo seguro para evitar NullPointerException
+        Long supplierId = null;
+        if (entity.getSupplier() != null) {
+            supplierId = entity.getSupplier().getId();
+        }
+
+        Long userModifyId = null;
+        if (entity.getUserModify() != null) {
+            userModifyId = entity.getUserModify().getId();
+        }
+
         return new Supply(
                 entity.getId(),
                 entity.getName(),
                 entity.getSupplierDocument(),
-                entity.getId(),
+                supplierId,
                 entity.getPrice(),
                 entity.getEntryDate(),
                 entity.getExpirationDate(),
                 entity.getQuantity(),
+                entity.getMinimumStock(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),
-                entity.getUserModify().getId()
+                userModifyId
         );
     }
 }

@@ -11,7 +11,15 @@ public record SupplierResponse(
         String address,
         String phone,
         String email,
+        String contactPerson,
         Status status,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt) {
+        LocalDateTime updatedAt,
+        // Datos de la última reseña (si existe)
+        LocalDateTime lastOrderDate,
+        Integer lastReviewRating,
+        String lastReviewComment,
+        Boolean onTimeDelivery,
+        Boolean qualityIssues,
+        Long userModify) {
 }

@@ -1,15 +1,9 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.dto.response;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record SupplyResponse(
-        Long id,
+public record SupplyInfoResponse(
         String name,
-        Double price,
-        LocalDate entryDate,
-        LocalDate expirationDate,
-        int quantity,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Long userModify) {

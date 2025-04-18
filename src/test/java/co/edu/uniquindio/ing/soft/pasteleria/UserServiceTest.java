@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
@@ -16,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.generateRandomNumericId;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.getRandomElement;
 
@@ -50,8 +50,10 @@ public class UserServiceTest {
                 null
         );
 
-        UserResponse response = manageUserUseCase.createUser(command);
-        Assertions.assertNotNull(response);
+        MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(command);
+        Assertions.assertNotNull(responseDTO);
+        Assertions.assertFalse(responseDTO.error());
+        Assertions.assertNotNull(responseDTO.respuesta());
     }
 
     @Test
@@ -82,7 +84,9 @@ public class UserServiceTest {
                 user.getId()
         );
 
-        UserResponse response = manageUserUseCase.createUser(command);
-        Assertions.assertNotNull(response);
+        MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(command);
+        Assertions.assertNotNull(responseDTO);
+        Assertions.assertFalse(responseDTO.error());
+        Assertions.assertNotNull(responseDTO.respuesta());
     }
 }

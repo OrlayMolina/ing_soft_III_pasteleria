@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class SupplyDtoMapper {
     public Supply toModel(CreateSupplyCommand command, Long supplierId) throws DomainException {
+        // Usar el minimumStock del comando si está presente, de lo contrario usar valor por defecto
+        int minimumStock = command.minimumStock() > 0 ? command.minimumStock() : 20;
+
         return new Supply(
                 command.name(),
                 command.supplierID(),
@@ -17,6 +20,7 @@ public class SupplyDtoMapper {
                 command.entryDate(),
                 command.expirationDate(),
                 command.quantity(),
+                minimumStock,
                 command.createdAt(),
                 command.updatedAt(),
                 command.userModify()
@@ -32,7 +36,8 @@ public class SupplyDtoMapper {
                 supply.getExpirationDate(),
                 supply.getQuantity(),
                 supply.getCreatedAt(),
-                supply.getUpdatedAt()
+                supply.getUpdatedAt(),
+                supply.getUserModify()
         );
     }
 }

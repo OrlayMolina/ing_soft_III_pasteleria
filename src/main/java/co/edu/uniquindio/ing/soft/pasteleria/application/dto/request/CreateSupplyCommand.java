@@ -1,28 +1,41 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.dto.request;
 
-import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supplier;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CreateSupplyCommand(
-        @NotBlank(message = "El nombre del insumo requerido")
+        @NotBlank(message = "El nombre no puede estar vacío")
         String name,
-        String supplierID,
-        @Positive
+
+        @NotNull(message = "El precio no puede ser nulo")
+        @Min(value = 1, message = "El precio debe ser mayor a 0")
         Double price,
-        @NotNull(message = "La fecha de entrada del insumo es requerido")
+
+        @NotBlank(message = "El ID del proveedor no puede estar vacío")
+        String supplierID,
+
+        @NotNull(message = "La fecha de entrada no puede ser nula")
+        @PastOrPresent(message = "La fecha de entrada no puede ser futura")
         LocalDate entryDate,
-        @NotNull(message = "La fecha de salida del insumo es requerido")
+
         LocalDate expirationDate,
-        @Positive
+
+        @NotNull(message = "La cantidad no puede ser nula")
+        @Min(value = 0, message = "La cantidad no puede ser negativa")
         int quantity,
-        @NotNull(message = "Fecha de creación de un insumo es requerida")
+
+        @Min(value = 1, message = "El stock mínimo debe ser mayor a 0")
+        int minimumStock,
+
         LocalDateTime createdAt,
-        @NotNull(message = "Fecha de actualización de un insumo es requerida")
+
         LocalDateTime updatedAt,
-        Long userModify) {
+
+        Long userModify
+) {
 }

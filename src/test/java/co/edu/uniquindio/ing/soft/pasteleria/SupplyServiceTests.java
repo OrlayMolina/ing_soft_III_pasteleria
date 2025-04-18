@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplierCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplyCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
@@ -40,6 +41,8 @@ public class SupplyServiceTests {
     private ManageUserUseCase manageUserUseCase;
     @Autowired
     private ManageSupplyUseCase manageSupplyUseCase;
+    @Autowired
+    private ManageSupplierUseCase manageSupplierUseCase;
 
 
     @Test
@@ -76,42 +79,57 @@ public class SupplyServiceTests {
                         LocalDateTime.of(2024, 9, 14, 15, 30, 0),
                         null
                 );
-                UserResponse response = manageUserUseCase.createUser(commandUser);
-                Assertions.assertNotNull(response);
+                MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(commandUser);
+                Assertions.assertNotNull(responseDTO);
+                Assertions.assertFalse(responseDTO.error());
+
                 List<UserEntity> usersGenerate = userJpaRepository.findAll();
                 UserEntity userGenerate = getRandomElement(usersGenerate);
 
                 String randomSupplierID = generateRandomNumericId(10);
                 CreateSupplyCommand supplyCommand = new CreateSupplyCommand(
                         "Azúcar",
-                        randomSupplierID,
                         15000.0,
+                        randomSupplierID,
                         LocalDate.now(),
                         LocalDate.now().plusDays(30),
                         100,
+                        20,
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         userGenerate.getId()
                 );
 
-                SupplyResponse SupplyResponse = manageSupplyUseCase.createSupply(supplyCommand);
-                Assertions.assertNotNull(SupplyResponse);
-            }else {
+                MensajeDTO<SupplyResponse> supplyResponse = manageSupplyUseCase.createSupply(supplyCommand);
+                Assertions.assertNotNull(supplyResponse);
+                Assertions.assertFalse(supplyResponse.error());
+                Assertions.assertNotNull(supplyResponse.respuesta());
+            } else {
                 String randomSupplierID = generateRandomNumericId(10);
                 CreateSupplierCommand supplierCommand = new CreateSupplierCommand(
                         "Harina as de oros",
+                        TypeDocument.NIT,
                         randomSupplierID,
                         "Huila",
                         "+577425689",
                         "asdeoros@gmail.com",
+                        "Sofia Guerra",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
                         Status.ACTIVO,
                         LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                         LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                         user.getId()
                 );
+                // Suponiendo que ya modificaste también ManageSupplierUseCase para usar MensajeDTO
+                MensajeDTO<SupplierResponse> supplierResponse = manageSupplierUseCase.createSupplier(supplierCommand);
+                Assertions.assertNotNull(supplierResponse);
+                Assertions.assertFalse(supplierResponse.error());
             }
-        }else {
-
+        } else {
             if(user == null){
                 String randomUserDocument = generateRandomNumericId(10);
 
@@ -133,26 +151,30 @@ public class SupplyServiceTests {
                         LocalDateTime.of(2024, 9, 14, 15, 30, 0),
                         null
                 );
-                UserResponse userResponse = manageUserUseCase.createUser(commandUser);
+                MensajeDTO<UserResponse> userResponse = manageUserUseCase.createUser(commandUser);
                 Assertions.assertNotNull(userResponse);
+                Assertions.assertFalse(userResponse.error());
 
                 List<UserEntity> usersGenerate = userJpaRepository.findAll();
                 UserEntity userGenerate = getRandomElement(usersGenerate);
 
                 CreateSupplyCommand command = new CreateSupplyCommand(
                         "Azúcar",
-                        supplier.getSupplierID(),
                         15000.0,
+                        supplier.getSupplierID(),
                         LocalDate.now(),
                         LocalDate.now().plusDays(30),
                         100,
+                        20,
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         userGenerate.getId()
                 );
 
-                SupplyResponse SupplyResponse = manageSupplyUseCase.createSupply(command);
-                Assertions.assertNotNull(SupplyResponse);
+                MensajeDTO<SupplyResponse> supplyResponse = manageSupplyUseCase.createSupply(command);
+                Assertions.assertNotNull(supplyResponse);
+                Assertions.assertFalse(supplyResponse.error());
+                Assertions.assertNotNull(supplyResponse.respuesta());
             }
         }
     }
