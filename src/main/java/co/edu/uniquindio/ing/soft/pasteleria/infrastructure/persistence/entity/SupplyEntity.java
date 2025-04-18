@@ -40,6 +40,9 @@ public class SupplyEntity {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "minimum_stock", nullable = false)
+    private int minimumStock = 20;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -54,4 +57,19 @@ public class SupplyEntity {
     @ManyToOne
     @JoinColumn(name = "modify_by")
     private UserEntity userModify;
+
+    public boolean isLowStock() {
+        return quantity < minimumStock;
+    }
+
+    public boolean isAboutToExpire() {
+        return LocalDate.now().plusDays(15).isAfter(expirationDate);
+    }
+
+    public String getStockStatusLabel() {
+        if (isLowStock()) {
+            return "Bajo Stock";
+        }
+        return "Normal";
+    }
 }

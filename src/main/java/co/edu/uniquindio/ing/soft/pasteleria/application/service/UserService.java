@@ -1,8 +1,10 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.service;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.mapper.UserDtoMapper;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.UserPort;
@@ -11,7 +13,6 @@ import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,44 +30,47 @@ public class UserService implements ManageUserUseCase {
     private final UserJpaRepository userJpaRepository;
 
     @Override
-    public UserResponse createUser(CreateUserCommand command) throws DomainException {
-        Optional<UserEntity> userOptional = userJpaRepository.findByEmail(command.email());
-        if(userOptional.isPresent()) {
-            throw new DomainException("Ya existe un usuario con el mismo correo electrónico.");
-        }
-
-        User user = new User(
-                command.typeDocument(),
-                command.documentNumber(),
-                command.phone(),
-                command.position(),
-                command.salary(),
-                command.firstName(),
-                command.secondName(),
-                command.lastName(),
-                command.secondLastName(),
-                command.email(),
-                encriptarPassword(command.password()),
-                command.status(),
-                command.isAdmin(),
-                command.createdAt(),
-                command.updatedAt()
-        );
-
+    public MensajeDTO<UserResponse> createUser(CreateUserCommand command) throws DomainException {
         try {
+            Optional<UserEntity> userOptional = userJpaRepository.findByEmail(command.email());
+            if(userOptional.isPresent()) {
+                throw new DomainException("Ya existe un usuario con el mismo correo electrónico.");
+            }
+
+            User user = new User(
+                    command.typeDocument(),
+                    command.documentNumber(),
+                    command.phone(),
+                    command.position(),
+                    command.salary(),
+                    command.firstName(),
+                    command.secondName(),
+                    command.lastName(),
+                    command.secondLastName(),
+                    command.email(),
+                    encriptarPassword(command.password()),
+                    command.status(),
+                    command.isAdmin(),
+                    command.createdAt(),
+                    command.updatedAt()
+            );
+
             User savedUser = userPort.saveUser(user);
-            return userDtoMapper.toResponse(savedUser);
+            UserResponse response = userDtoMapper.toResponse(savedUser);
+            return new MensajeDTO<>(false, response);
         } catch (DomainException e) {
-            throw new RuntimeException("Error al crear el usuario: " + e.getMessage(), e);
+            return new MensajeDTO<>(true, null);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
         }
     }
 
     @Override
-    public UserResponse updateUser(Long id, UpdateUserCommand command) {
+    public MensajeDTO<UserResponse> updateUser(Long id, UpdateUserCommand command) {
         try {
             Optional<User> optionalUser = userPort.findUserById(id);
             if (optionalUser.isEmpty()) {
-                throw new RuntimeException("El usuario con id " + id + " no existe.");
+                return new MensajeDTO<>(true, null);
             }
 
             User existingUser = optionalUser.get();
@@ -87,37 +91,81 @@ public class UserService implements ManageUserUseCase {
             existingUser.setUpdatedAt(command.updatedAt());
 
             User updatedUser = userPort.saveUser(existingUser);
-            return userDtoMapper.toResponse(updatedUser);
+            UserResponse response = userDtoMapper.toResponse(updatedUser);
 
+            return new MensajeDTO<>(false, response);
         } catch (DomainException e) {
-            throw new RuntimeException("Error al actualizar el usuario: " + e.getMessage(), e);
+            return new MensajeDTO<>(true, null);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
         }
     }
 
     @Override
-    public void deleteUser(Long id) {
-        userPort.deleteUserById(id);
-    }
-
-    @Override
-    public UserResponse getUser(Long id) throws DomainException {
-        Optional<User> optionalUser = userPort.findUserById(id);
-        if (optionalUser.isEmpty()) {
-            return null;
+    public MensajeDTO<Void> deleteUser(Long id) {
+        try {
+            userPort.deleteUserById(id);
+            return new MensajeDTO<>(false, null);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
         }
-        return userDtoMapper.toResponse(optionalUser.get());
     }
 
-    @SneakyThrows
     @Override
-    public List<UserResponse> searchUser() {
-        List<User> users = userPort.findAllUsers();
-        return users.stream().map(user -> {
-            try {
-                return userDtoMapper.toResponse(user);
-            } catch (DomainException e) {
-                throw new RuntimeException("Error al mapear User a UserResponse", e);
+    public MensajeDTO<UserResponse> getUser(Long id) throws DomainException {
+        try {
+            Optional<User> optionalUser = userPort.findUserById(id);
+            if (optionalUser.isEmpty()) {
+                return new MensajeDTO<>(true, null);
             }
-        }).toList();
+            UserResponse response = userDtoMapper.toResponse(optionalUser.get());
+            return new MensajeDTO<>(false, response);
+        } catch (DomainException e) {
+            return new MensajeDTO<>(true, null);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
+        }
+    }
+
+    @Override
+    public MensajeDTO<List<UserResponse>> searchUser() {
+        try {
+            List<User> users = userPort.findAllUsers();
+            List<UserResponse> responses = users.stream().map(user -> {
+                try {
+                    return userDtoMapper.toResponse(user);
+                } catch (DomainException e) {
+                    throw new RuntimeException("Error al mapear User a UserResponse", e);
+                }
+            }).toList();
+
+            return new MensajeDTO<>(false, responses);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
+        }
+    }
+
+    @Override
+    public MensajeDTO<UserSimplifyResponse> getUserBasicInfo(Long id) throws DomainException {
+        try {
+            Optional<User> optionalUser = userPort.findUserById(id);
+            if (optionalUser.isEmpty()) {
+                return new MensajeDTO<>(true, null);
+            }
+
+            User user = optionalUser.get();
+            UserSimplifyResponse response = new UserSimplifyResponse(
+                    user.getTypeDocument(),
+                    user.getDocumentNumber(),
+                    user.getFirstName(),
+                    user.getSecondName(),
+                    user.getLastName(),
+                    user.getSecondLastName()
+            );
+
+            return new MensajeDTO<>(false, response);
+        } catch (Exception e) {
+            return new MensajeDTO<>(true, null);
+        }
     }
 }

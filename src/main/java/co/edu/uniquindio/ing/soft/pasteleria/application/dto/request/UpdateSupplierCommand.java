@@ -10,7 +10,14 @@ public record UpdateSupplierCommand(
         String address,
         String phone,
         String email,
+        String contactPerson,
         Status status,
         LocalDateTime updatedAt,
-        Long userModify) {
+        Long userModify,
+        // Campos opcionales para actualizar reseña
+        LocalDateTime lastOrderDate,
+        Integer lastReviewRating,
+        String lastReviewComment,
+        Boolean onTimeDelivery,
+        Boolean qualityIssues) {
 }

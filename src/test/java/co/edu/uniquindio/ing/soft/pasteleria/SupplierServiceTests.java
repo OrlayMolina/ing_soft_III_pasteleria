@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplierCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplierResponse;
@@ -39,9 +40,9 @@ public class SupplierServiceTests {
         String randomSupplierID = generateRandomNumericId(9);
         List<UserEntity> users = jpaRepository.findAll();
         UserEntity user = new UserEntity();
-         if(!users.isEmpty()){
-             user = getRandomElement(users);
-         }
+        if(!users.isEmpty()){
+            user = getRandomElement(users);
+        }
 
         if(user == null){
             String randomUserDocument = generateRandomNumericId(10);
@@ -64,42 +65,62 @@ public class SupplierServiceTests {
                     LocalDateTime.of(2024, 9, 14, 15, 30, 0),
                     null
             );
-            UserResponse userResponse = manageUserUseCase.createUser(commandUser);
-            Assertions.assertNotNull(userResponse);
+            // Asumiendo que ManageUserUseCase también se ha actualizado para devolver MensajeDTO
+            MensajeDTO<UserResponse> userResponseDTO = manageUserUseCase.createUser(commandUser);
+            Assertions.assertNotNull(userResponseDTO);
+            Assertions.assertFalse(userResponseDTO.error());
+            Assertions.assertNotNull(userResponseDTO.respuesta());
 
             Optional<UserEntity> usersGenerate = jpaRepository.findByDocumentNumber(commandUser.documentNumber());
             UserEntity userGenerate = getRandomElement(Collections.singletonList(usersGenerate.get()));
 
             CreateSupplierCommand command = new CreateSupplierCommand(
                     "Harina as de oros",
+                    TypeDocument.NIT,
                     randomSupplierID,
                     "Huila",
                     "+577425689",
                     "asdeoros@gmail.com",
+                    "Veronica Garcia",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     Status.ACTIVO,
                     LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                     LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                     userGenerate.getId()
             );
 
-            SupplierResponse response = manageSupplierUseCase.createSupplier(command);
-            Assertions.assertNotNull(response);
-        }else {
+            MensajeDTO<SupplierResponse> responseDTO = manageSupplierUseCase.createSupplier(command);
+            Assertions.assertNotNull(responseDTO);
+            Assertions.assertFalse(responseDTO.error());
+            Assertions.assertNotNull(responseDTO.respuesta());
+        } else {
             CreateSupplierCommand command = new CreateSupplierCommand(
                     "Harina as de oros",
+                    TypeDocument.NIT,
                     randomSupplierID,
                     "Huila",
                     "+577425689",
                     "asdeoros@gmail.com",
+                    "Sofia Guerra",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     Status.ACTIVO,
                     LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                     LocalDateTime.of(2023, 9, 14, 15, 30, 0),
                     user.getId()
             );
 
-            SupplierResponse response = manageSupplierUseCase.createSupplier(command);
-            Assertions.assertNotNull(response);
+            MensajeDTO<SupplierResponse> responseDTO = manageSupplierUseCase.createSupplier(command);
+            Assertions.assertNotNull(responseDTO);
+            Assertions.assertFalse(responseDTO.error());
+            Assertions.assertNotNull(responseDTO.respuesta());
         }
-
     }
 }

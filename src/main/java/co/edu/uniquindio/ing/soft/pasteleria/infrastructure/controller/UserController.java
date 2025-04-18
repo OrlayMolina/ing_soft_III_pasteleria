@@ -1,8 +1,10 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.controller;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import jakarta.validation.Valid;
@@ -21,65 +23,80 @@ public class UserController {
     private final ManageUserUseCase manageUserUseCase;
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserCommand command) {
+    public ResponseEntity<MensajeDTO<UserResponse>> createUser(@Valid @RequestBody CreateUserCommand command) {
         try {
-            UserResponse response = manageUserUseCase.createUser(command);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            MensajeDTO<UserResponse> response = manageUserUseCase.createUser(command);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (DomainException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, null));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserCommand command) {
+    public ResponseEntity<MensajeDTO<UserResponse>> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserCommand command) {
         try {
-            UserResponse response = manageUserUseCase.updateUser(id, command);
-            if (response == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            MensajeDTO<UserResponse> response = manageUserUseCase.updateUser(id, command);
+            if (response.error() || response.respuesta() == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<MensajeDTO<Void>> deleteUser(@PathVariable Long id) {
         try {
-            manageUserUseCase.deleteUser(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            MensajeDTO<Void> response = manageUserUseCase.deleteUser(id);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
+    public ResponseEntity<MensajeDTO<UserResponse>> getUser(@PathVariable Long id) {
         try {
-            UserResponse response = manageUserUseCase.getUser(id);
-            if (response == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            MensajeDTO<UserResponse> response = manageUserUseCase.getUser(id);
+            if (response.error() || response.respuesta() == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         } catch (DomainException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, null));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
+    public ResponseEntity<MensajeDTO<List<UserResponse>>> getAllUsers() {
         try {
-            List<UserResponse> users = manageUserUseCase.searchUser();
-            if (users.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            MensajeDTO<List<UserResponse>> response = manageUserUseCase.searchUser();
+            if (response.error() || response.respuesta() == null || response.respuesta().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
             }
-            return new ResponseEntity<>(users, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
+        }
+    }
+
+    @GetMapping("/{id}/basic-info")
+    public ResponseEntity<MensajeDTO<UserSimplifyResponse>> getUserBasicInfo(@PathVariable Long id) {
+        try {
+            MensajeDTO<UserSimplifyResponse> response = manageUserUseCase.getUserBasicInfo(id);
+            if (response.error() || response.respuesta() == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+            return ResponseEntity.ok(response);
+        } catch (DomainException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
     }
 }
