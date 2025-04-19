@@ -30,9 +30,9 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
+//        response.addHeader("Access-Control-Allow-Origin", "*");
+//        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
 
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -44,6 +44,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         boolean requiereAutenticacion = requestURI.startsWith("/api/supplies") ||
                 requestURI.startsWith("/api/supply") ||
+                requestURI.startsWith("/api/suppliers") ||
                 requestURI.startsWith("/api/users") ||
                 requestURI.startsWith("/api/purchase-invoice");
 
