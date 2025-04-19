@@ -2,7 +2,6 @@ package co.edu.uniquindio.ing.soft.pasteleria.application.service;
 
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.LoginDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.TokenDTO;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageAuthUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.JWTUtils;
@@ -31,11 +30,11 @@ public class AuthService implements ManageAuthUseCase {
             throw new DomainException("Usuario no encontrado");
         }
 
-        if( !passwordEncoder.matches(loginDTO.password(), userEntity.get().getPassword()) ) {
+        if (!passwordEncoder.matches(loginDTO.password(), userEntity.get().getPassword())) {
             throw new DomainException("La contraseña es incorrecta");
         }
         Map<String, Object> map = construirClaims(userEntity.get());
-        return new TokenDTO( jwtUtils.generarToken(userEntity.get().getEmail(), map) );
+        return new TokenDTO(jwtUtils.generarToken(userEntity.get().getEmail(), map));
     }
 
     private Map<String, Object> construirClaims(UserEntity userEntity) {

@@ -39,7 +39,7 @@ public class SupplyService implements ManageSupplyUseCase {
     public MensajeDTO<SupplyResponse> createSupply(CreateSupplyCommand command) throws DomainException {
         try {
             Optional<SupplyEntity> supplyOptional = supplyJpaRepository.findByName(command.name());
-            if(supplyOptional.isPresent()) {
+            if (supplyOptional.isPresent()) {
                 throw new DomainException("Ya existe un insumo con el mismo nombre.");
             }
 

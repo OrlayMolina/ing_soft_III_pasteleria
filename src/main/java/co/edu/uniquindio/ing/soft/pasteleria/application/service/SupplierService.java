@@ -41,7 +41,7 @@ public class SupplierService implements ManageSupplierUseCase {
         try {
             // Verificar si ya existe un proveedor con el mismo ID
             Optional<SupplierEntity> supplierOptional = supplierJpaRepository.findBySupplierID(command.supplierID());
-            if(supplierOptional.isPresent()){
+            if (supplierOptional.isPresent()) {
                 throw new DomainException("Ya existe un proveedor con el mismo número de ID.");
             }
 

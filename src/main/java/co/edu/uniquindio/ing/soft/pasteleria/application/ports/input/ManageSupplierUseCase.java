@@ -11,10 +11,16 @@ import java.util.List;
 
 public interface ManageSupplierUseCase {
     MensajeDTO<SupplierResponse> createSupplier(CreateSupplierCommand command) throws DomainException;
+
     MensajeDTO<SupplierResponse> updateSupplier(Long id, UpdateSupplierCommand command);
+
     MensajeDTO<Void> deleteSupplier(Long id);
+
     MensajeDTO<SupplierResponse> getSupplier(Long id) throws DomainException;
+
     MensajeDTO<List<SupplierResponse>> searchSupplier();
+
     MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliers(int page, int size);
+
     MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliers(int page, int size, String sort, String direction, String search);
 }

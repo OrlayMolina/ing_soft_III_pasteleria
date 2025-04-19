@@ -40,11 +40,11 @@ public class SupplierServiceTests {
         String randomSupplierID = generateRandomNumericId(9);
         List<UserEntity> users = jpaRepository.findAll();
         UserEntity user = new UserEntity();
-        if(!users.isEmpty()){
+        if (!users.isEmpty()) {
             user = getRandomElement(users);
         }
 
-        if(user == null){
+        if (user == null) {
             String randomUserDocument = generateRandomNumericId(10);
 
             CreateUserCommand commandUser = new CreateUserCommand(
@@ -66,7 +66,7 @@ public class SupplierServiceTests {
                     null
             );
             // Asumiendo que ManageUserUseCase también se ha actualizado para devolver MensajeDTO
-            MensajeDTO<UserResponse> userResponseDTO = manageUserUseCase.createUser(commandUser);
+            MensajeDTO<String> userResponseDTO = manageUserUseCase.createUser(commandUser);
             Assertions.assertNotNull(userResponseDTO);
             Assertions.assertFalse(userResponseDTO.error());
             Assertions.assertNotNull(userResponseDTO.respuesta());

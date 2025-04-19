@@ -50,7 +50,7 @@ public class UserServiceTest {
                 null
         );
 
-        MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(command);
+        MensajeDTO<String> responseDTO = manageUserUseCase.createUser(command);
         Assertions.assertNotNull(responseDTO);
         Assertions.assertFalse(responseDTO.error());
         Assertions.assertNotNull(responseDTO.respuesta());
@@ -61,7 +61,7 @@ public class UserServiceTest {
         String randomUserDocument = generateRandomNumericId(10);
         List<UserEntity> users = jpaRepository.findAll();
         UserEntity user = new UserEntity();
-        if(!users.isEmpty()){
+        if (!users.isEmpty()) {
             user = getRandomElement(users);
         }
 
@@ -84,7 +84,7 @@ public class UserServiceTest {
                 user.getId()
         );
 
-        MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(command);
+        MensajeDTO<String> responseDTO = manageUserUseCase.createUser(command);
         Assertions.assertNotNull(responseDTO);
         Assertions.assertFalse(responseDTO.error());
         Assertions.assertNotNull(responseDTO.respuesta());

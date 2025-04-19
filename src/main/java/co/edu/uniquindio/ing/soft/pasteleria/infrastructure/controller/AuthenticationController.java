@@ -9,12 +9,9 @@ import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,13 +22,14 @@ public class AuthenticationController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<MensajeDTO<TokenDTO>> iniciarSesion(@Valid @RequestBody LoginDTO loginDTO){
+    public ResponseEntity<MensajeDTO<TokenDTO>> iniciarSesion(@Valid @RequestBody LoginDTO loginDTO) {
         try {
             TokenDTO tokenDTO = authService.logIn(loginDTO);
-            return ResponseEntity.ok(new MensajeDTO<>(false,  tokenDTO));
+            return ResponseEntity.ok(new MensajeDTO<>(false, tokenDTO));
         } catch (DomainException e) {
             return ResponseEntity.status(NOT_FOUND).body(new MensajeDTO<>(true, new TokenDTO(e.getMessage())));
         }
     }
+    
 }
 

@@ -26,7 +26,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.generateRandomNumericId;
 import static co.edu.uniquindio.ing.soft.pasteleria.utils.RandomUtil.getRandomElement;
 
@@ -49,16 +48,16 @@ public class SupplyServiceTests {
     public void createSupplyTest() throws DomainException {
         List<SupplierEntity> suppliers = jpaRepository.findAll();
         SupplierEntity supplier = new SupplierEntity();
-        if(!suppliers.isEmpty()){
+        if (!suppliers.isEmpty()) {
             supplier = getRandomElement(suppliers);
         }
         List<UserEntity> users = userJpaRepository.findAll();
         UserEntity user = new UserEntity();
-        if(!users.isEmpty()){
+        if (!users.isEmpty()) {
             user = getRandomElement(users);
         }
-        if(supplier == null){
-            if(user == null){
+        if (supplier == null) {
+            if (user == null) {
                 String randomUserDocument = generateRandomNumericId(10);
 
                 CreateUserCommand commandUser = new CreateUserCommand(
@@ -79,7 +78,7 @@ public class SupplyServiceTests {
                         LocalDateTime.of(2024, 9, 14, 15, 30, 0),
                         null
                 );
-                MensajeDTO<UserResponse> responseDTO = manageUserUseCase.createUser(commandUser);
+                MensajeDTO<String> responseDTO = manageUserUseCase.createUser(commandUser);
                 Assertions.assertNotNull(responseDTO);
                 Assertions.assertFalse(responseDTO.error());
 
@@ -130,7 +129,7 @@ public class SupplyServiceTests {
                 Assertions.assertFalse(supplierResponse.error());
             }
         } else {
-            if(user == null){
+            if (user == null) {
                 String randomUserDocument = generateRandomNumericId(10);
 
                 CreateUserCommand commandUser = new CreateUserCommand(
@@ -151,7 +150,7 @@ public class SupplyServiceTests {
                         LocalDateTime.of(2024, 9, 14, 15, 30, 0),
                         null
                 );
-                MensajeDTO<UserResponse> userResponse = manageUserUseCase.createUser(commandUser);
+                MensajeDTO<String> userResponse = manageUserUseCase.createUser(commandUser);
                 Assertions.assertNotNull(userResponse);
                 Assertions.assertFalse(userResponse.error());
 

@@ -3,6 +3,8 @@ package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.controller;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.PageResponse;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
@@ -23,14 +25,14 @@ public class UserController {
     private final ManageUserUseCase manageUserUseCase;
 
     @PostMapping
-    public ResponseEntity<MensajeDTO<UserResponse>> createUser(@Valid @RequestBody CreateUserCommand command) {
+    public ResponseEntity<MensajeDTO<String>> createUser(@Valid @RequestBody CreateUserCommand command) {
         try {
-            MensajeDTO<UserResponse> response = manageUserUseCase.createUser(command);
+            MensajeDTO<String> response = manageUserUseCase.createUser(command);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (DomainException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, e.getMessage()));
         }
     }
 
@@ -98,5 +100,15 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MensajeDTO<>(true, null));
         }
+    }
+
+    @GetMapping("/paged")
+    public ResponseEntity<MensajeDTO<PageResponse<UserResponse>>> getPagedUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String sort,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(required = false) String search) {
+        return ResponseEntity.ok(manageUserUseCase.getPagedUsers(page, size, sort, direction, search));
     }
 }

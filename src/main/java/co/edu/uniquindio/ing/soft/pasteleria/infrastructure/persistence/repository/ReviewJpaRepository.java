@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ReviewJpaRepository extends JpaRepository<ReviewEntity, Long> {
     Optional<ReviewEntity> findTopBySupplierIdOrderByOrderDateDesc(Long supplierId);
+
     List<ReviewEntity> findBySupplierIdOrderByOrderDateDesc(Long supplierId);
 }

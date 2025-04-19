@@ -3,21 +3,26 @@ package co.edu.uniquindio.ing.soft.pasteleria.application.service;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.PageResponse;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.mapper.UserDtoMapper;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.UserPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
+import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supply;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
 
@@ -30,10 +35,10 @@ public class UserService implements ManageUserUseCase {
     private final UserJpaRepository userJpaRepository;
 
     @Override
-    public MensajeDTO<UserResponse> createUser(CreateUserCommand command) throws DomainException {
+    public MensajeDTO<String> createUser(CreateUserCommand command) throws DomainException {
         try {
             Optional<UserEntity> userOptional = userJpaRepository.findByEmail(command.email());
-            if(userOptional.isPresent()) {
+            if (userOptional.isPresent()) {
                 throw new DomainException("Ya existe un usuario con el mismo correo electrónico.");
             }
 
@@ -55,13 +60,10 @@ public class UserService implements ManageUserUseCase {
                     command.updatedAt()
             );
 
-            User savedUser = userPort.saveUser(user);
-            UserResponse response = userDtoMapper.toResponse(savedUser);
-            return new MensajeDTO<>(false, response);
-        } catch (DomainException e) {
-            return new MensajeDTO<>(true, null);
+            userPort.saveUser(user);
+            return new MensajeDTO<>(false, "usuario creado con exito");
         } catch (Exception e) {
-            return new MensajeDTO<>(true, null);
+            return new MensajeDTO<>(true, "Error al crear el usuario: " + e.getMessage());
         }
     }
 
@@ -167,5 +169,31 @@ public class UserService implements ManageUserUseCase {
         } catch (Exception e) {
             return new MensajeDTO<>(true, null);
         }
+    }
+
+    @Override
+    public MensajeDTO<PageResponse<UserResponse>> getPagedUsers(int page, int size, String sort, String direction, String search) {
+        Page<User> usersPage = userPort.findUsersWithPaginationAndSorting(page, size, sort, direction, search);
+
+        List<UserResponse> items = usersPage.getContent().stream()
+                .map(supply -> {
+                    try {
+                        return userDtoMapper.toResponse(supply);
+                    } catch (DomainException e) {
+                        throw new RuntimeException("Error al mapear usuario a DTO", e);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        PageResponse<UserResponse> pageResponse = new PageResponse<>(
+                items,
+                usersPage.getNumber(),
+                usersPage.getSize(),
+                usersPage.getTotalElements(),
+                usersPage.getTotalPages(),
+                usersPage.isLast()
+        );
+
+        return new MensajeDTO<>(false, pageResponse);
     }
 }

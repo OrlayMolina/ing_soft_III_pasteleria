@@ -18,7 +18,8 @@ public class ReviewPersistenceMapper {
 
     /**
      * Convierte un objeto Review del dominio a una entidad ReviewEntity con el proveedor proporcionado
-     * @param review El objeto Review del dominio
+     *
+     * @param review         El objeto Review del dominio
      * @param supplierEntity La entidad SupplierEntity ya obtenida
      * @return Una entidad ReviewEntity
      */
@@ -46,6 +47,7 @@ public class ReviewPersistenceMapper {
 
     /**
      * Convierte una entidad ReviewEntity a un objeto Review del dominio
+     *
      * @param entity La entidad ReviewEntity
      * @return Un objeto Review del dominio
      */

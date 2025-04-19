@@ -9,9 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-import static co.edu.uniquindio.ing.soft.pasteleria.domain.constant.Constants.SUPPLIER_NAME_CAN_NOT_BE_EMPTY;
-import static co.edu.uniquindio.ing.soft.pasteleria.domain.constant.Constants.SUPPLIER_NAME_LENGTH;
-import static co.edu.uniquindio.ing.soft.pasteleria.domain.constant.Constants.SUPPLIER_ADDRESS_CAN_NOT_BE_EMPTY;
+import static co.edu.uniquindio.ing.soft.pasteleria.domain.constant.Constants.*;
 
 @NoArgsConstructor
 @Getter
@@ -142,21 +140,21 @@ public class Supplier {
         return deactivated;
     }
 
-    public boolean isActive(){
+    public boolean isActive() {
         return Status.ACTIVO.equals(status);
     }
 
     private void validateName(String name) throws DomainException {
-        if(name == null || name.trim().isEmpty()){
+        if (name == null || name.trim().isEmpty()) {
             throw new DomainException(SUPPLIER_NAME_CAN_NOT_BE_EMPTY);
         }
-        if(name.length() < 3 || name.length() > 100){
+        if (name.length() < 3 || name.length() > 100) {
             throw new DomainException(SUPPLIER_NAME_LENGTH);
         }
     }
 
     private void validateAddress(String address) throws DomainException {
-        if(address == null || address.trim().isEmpty()){
+        if (address == null || address.trim().isEmpty()) {
             throw new DomainException(SUPPLIER_ADDRESS_CAN_NOT_BE_EMPTY);
         }
     }
