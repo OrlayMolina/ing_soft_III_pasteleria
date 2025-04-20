@@ -69,4 +69,27 @@ public class UserEntity {
     @ManyToOne
     @JoinColumn(name = "modify_by")
     private UserEntity deletedBy;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", typeDocument=" + typeDocument +
+                ", documentNumber='" + documentNumber + '\'' +
+                ", phone='" + phone + '\'' +
+                ", position='" + position + '\'' +
+                ", salary=" + salary +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", secondLastName='" + secondLastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", isAdmin=" + isAdmin +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedBy=" + deletedBy +
+                '}';
+    }
 }

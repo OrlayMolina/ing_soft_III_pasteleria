@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface ReviewPort {
     Review saveReview(Review review);
+
     Optional<Review> findLatestReviewBySupplier(Long supplierId);
+
     List<Review> findAllReviewsBySupplier(Long supplierId);
+
     void deleteReviewById(Long id);
 }

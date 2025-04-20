@@ -95,10 +95,10 @@ public class DataInitializer implements CommandLineRunner {
 
             if (suppliers == null || suppliers.isEmpty()) {
 
-                createSupplierIfNotExists("Harina as de oros", "89452121", "asdeoros@gmail.com", "Sofia","Huila", "+577425689");
-                createSupplierIfNotExists("Huevos Santa Reyes", "7896555", "contacto@santareyes.com","" ,"Bogotá", "+5716467878");
-                createSupplierIfNotExists("Leche Alquería", "7895568", "info@alqueria.com.co", "","Medellín", "+5743609080");
-                createSupplierIfNotExists("Azúcar Manuelita", "88965588", "servicioalcliente@manuelita.com", "","Cali", "+5723310999");
+                createSupplierIfNotExists("Harina as de oros", "89452121", "asdeoros@gmail.com", "Sofia", "Huila", "+577425689");
+                createSupplierIfNotExists("Huevos Santa Reyes", "7896555", "contacto@santareyes.com", "", "Bogotá", "+5716467878");
+                createSupplierIfNotExists("Leche Alquería", "7895568", "info@alqueria.com.co", "", "Medellín", "+5743609080");
+                createSupplierIfNotExists("Azúcar Manuelita", "88965588", "servicioalcliente@manuelita.com", "", "Cali", "+5723310999");
                 logger.info("Suppliers initialized successfully");
             } else {
                 logger.info("Suppliers already exist, skipping creation");
@@ -108,7 +108,7 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
-    private void createSupplierIfNotExists(String name, String supplierID, String email, String contactPerson,String location, String phone) {
+    private void createSupplierIfNotExists(String name, String supplierID, String email, String contactPerson, String location, String phone) {
         try {
 
             String randomSupplierId = generateRandomNumericId(9);

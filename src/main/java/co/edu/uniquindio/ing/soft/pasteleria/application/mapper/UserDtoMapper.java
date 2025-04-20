@@ -30,6 +30,7 @@ public class UserDtoMapper {
 
     public UserResponse toResponse(User user) throws DomainException {
         return new UserResponse(
+                user.getId(),
                 user.getTypeDocument(),
                 user.getDocumentNumber(),
                 user.getPhone(),

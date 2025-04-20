@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface SupplierJpaRepository extends JpaRepository<SupplierEntity, Long> {
     Optional<SupplierEntity> findSupplierEntitiesByName(String name);
+
     Optional<SupplierEntity> findBySupplierID(String supplierID);
+
     Page<SupplierEntity> findAll(Specification<SupplierEntity> spec, Pageable pageable);
 }

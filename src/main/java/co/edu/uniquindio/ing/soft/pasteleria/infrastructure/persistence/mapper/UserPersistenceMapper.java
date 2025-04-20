@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.mapper;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
@@ -14,6 +15,7 @@ public class UserPersistenceMapper {
         }
 
         UserEntity entity = new UserEntity();
+        entity.setId(user.getId());
         entity.setTypeDocument(user.getTypeDocument());
         entity.setPhone(user.getPhone());
         entity.setPosition(user.getPosition());
@@ -38,6 +40,31 @@ public class UserPersistenceMapper {
         }
 
         return new User(
+                entity.getTypeDocument(),
+                entity.getDocumentNumber(),
+                entity.getPhone(),
+                entity.getPosition(),
+                entity.getSalary(),
+                entity.getFirstName(),
+                entity.getSecondName(),
+                entity.getLastName(),
+                entity.getSecondLastName(),
+                entity.getEmail(),
+                entity.getPassword(),
+                entity.getStatus(),
+                entity.getIsAdmin(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt()
+        );
+    }
+
+    public UserResponse toDomainResponse(UserEntity entity) throws DomainException {
+        if (entity == null) {
+            return null;
+        }
+
+        return new UserResponse(
+                entity.getId(),
                 entity.getTypeDocument(),
                 entity.getDocumentNumber(),
                 entity.getPhone(),

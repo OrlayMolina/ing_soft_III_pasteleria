@@ -4,8 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class CryptoPassword {
 
-    public static String encriptarPassword(String password){
+    public static String encriptarPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode( password );
+        return passwordEncoder.encode(password);
     }
 }

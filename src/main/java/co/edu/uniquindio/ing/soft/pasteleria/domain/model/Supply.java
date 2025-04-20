@@ -25,7 +25,7 @@ public class Supply {
     private Long userModify;
 
     public Supply(String name, String supplierDocument, Long supplierId, Double price, LocalDate entryDate,
-                  LocalDate expirationDate, int quantity, int minimumStock,LocalDateTime createdAt,
+                  LocalDate expirationDate, int quantity, int minimumStock, LocalDateTime createdAt,
                   LocalDateTime updatedAt, Long userModify) {
         this.name = name;
         this.supplierDocument = supplierDocument;

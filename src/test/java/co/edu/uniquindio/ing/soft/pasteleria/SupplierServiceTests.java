@@ -4,7 +4,6 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSupplierCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplierResponse;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageSupplierUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.Status;
@@ -40,11 +39,11 @@ public class SupplierServiceTests {
         String randomSupplierID = generateRandomNumericId(9);
         List<UserEntity> users = jpaRepository.findAll();
         UserEntity user = new UserEntity();
-        if(!users.isEmpty()){
+        if (!users.isEmpty()) {
             user = getRandomElement(users);
         }
 
-        if(user == null){
+        if (user == null) {
             String randomUserDocument = generateRandomNumericId(10);
 
             CreateUserCommand commandUser = new CreateUserCommand(
@@ -66,7 +65,7 @@ public class SupplierServiceTests {
                     null
             );
             // Asumiendo que ManageUserUseCase también se ha actualizado para devolver MensajeDTO
-            MensajeDTO<UserResponse> userResponseDTO = manageUserUseCase.createUser(commandUser);
+            MensajeDTO<String> userResponseDTO = manageUserUseCase.createUser(commandUser);
             Assertions.assertNotNull(userResponseDTO);
             Assertions.assertFalse(userResponseDTO.error());
             Assertions.assertNotNull(userResponseDTO.respuesta());
