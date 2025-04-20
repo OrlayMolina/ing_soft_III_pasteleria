@@ -66,15 +66,17 @@ public class UserService implements ManageUserUseCase {
     }
 
     @Override
-    public MensajeDTO<UserResponse> updateUser(Long id, UpdateUserCommand command) {
+    public MensajeDTO<String> updateUser(Long id, UpdateUserCommand command) {
         try {
             Optional<User> optionalUser = userPort.findUserById(id);
             if (optionalUser.isEmpty()) {
-                return new MensajeDTO<>(true, null);
+                return new MensajeDTO<>(true, "Usuario no encontrado");
             }
 
             User existingUser = optionalUser.get();
+            existingUser.setEmail(command.id().toString());
             existingUser.setTypeDocument(command.typeDocument());
+            existingUser.setDocumentNumber(command.documentNumber());
             existingUser.setPhone(command.phone());
             existingUser.setPosition(command.position());
             existingUser.setSalary(command.salary());
@@ -90,14 +92,14 @@ public class UserService implements ManageUserUseCase {
             existingUser.setStatus(command.status());
             existingUser.setUpdatedAt(command.updatedAt());
 
-            User updatedUser = userPort.saveUser(existingUser);
+            User updatedUser = userPort.updateUser(existingUser);
             UserResponse response = userDtoMapper.toResponse(updatedUser);
 
-            return new MensajeDTO<>(false, response);
-        } catch (DomainException e) {
-            return new MensajeDTO<>(true, null);
+            return new MensajeDTO<>(false, "Usuario actualizado con exito");
+        }  catch (RuntimeException e) {
+            throw e; // Importante: relanzar para que se haga rollback real
         } catch (Exception e) {
-            return new MensajeDTO<>(true, null);
+            throw new RuntimeException("Error al actualizar el usuario", e);
         }
     }
 
@@ -114,14 +116,11 @@ public class UserService implements ManageUserUseCase {
     @Override
     public MensajeDTO<UserResponse> getUser(Long id) throws DomainException {
         try {
-            Optional<User> optionalUser = userPort.findUserById(id);
+            Optional<UserResponse> optionalUser = userPort.findUserByIdAllData(id);
             if (optionalUser.isEmpty()) {
                 return new MensajeDTO<>(true, null);
             }
-            UserResponse response = userDtoMapper.toResponse(optionalUser.get());
-            return new MensajeDTO<>(false, response);
-        } catch (DomainException e) {
-            return new MensajeDTO<>(true, null);
+            return new MensajeDTO<>(false, optionalUser.get());
         } catch (Exception e) {
             return new MensajeDTO<>(true, null);
         }
@@ -130,16 +129,15 @@ public class UserService implements ManageUserUseCase {
     @Override
     public MensajeDTO<List<UserResponse>> searchUser() {
         try {
-            List<User> users = userPort.findAllUsers();
-            List<UserResponse> responses = users.stream().map(user -> {
-                try {
-                    return userDtoMapper.toResponse(user);
-                } catch (DomainException e) {
-                    throw new RuntimeException("Error al mapear User a UserResponse", e);
-                }
-            }).toList();
-
-            return new MensajeDTO<>(false, responses);
+            List<UserResponse> users = userPort.findAllUsers();
+//            List<UserResponse> responses = users.stream().map(user -> {
+//                try {
+//                    return userDtoMapper.toResponse(user);
+//                } catch (DomainException e) {
+//                    throw new RuntimeException("Error al mapear User a UserResponse", e);
+//                }
+//            }).toList();
+            return new MensajeDTO<>(false, users);
         } catch (Exception e) {
             return new MensajeDTO<>(true, null);
         }
@@ -171,17 +169,9 @@ public class UserService implements ManageUserUseCase {
 
     @Override
     public MensajeDTO<PageResponse<UserResponse>> getPagedUsers(int page, int size, String sort, String direction, String search) {
-        Page<User> usersPage = userPort.findUsersWithPaginationAndSorting(page, size, sort, direction, search);
+        Page<UserResponse> usersPage = userPort.findUsersWithPaginationAndSorting(page, size, sort, direction, search);
 
-        List<UserResponse> items = usersPage.getContent().stream()
-                .map(user -> {
-                    try {
-                        return userDtoMapper.toResponse(user);
-                    } catch (DomainException e) {
-                        throw new RuntimeException("Error al mapear usuario a DTO", e);
-                    }
-                })
-                .collect(Collectors.toList());
+        List<UserResponse> items = usersPage.getContent().stream().toList();
 
         PageResponse<UserResponse> pageResponse = new PageResponse<>(
                 items,

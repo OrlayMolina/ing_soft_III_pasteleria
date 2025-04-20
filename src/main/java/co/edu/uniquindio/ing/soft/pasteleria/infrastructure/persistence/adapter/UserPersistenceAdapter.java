@@ -1,8 +1,10 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter;
 
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.UserPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
+import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.SupplyEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.mapper.UserPersistenceMapper;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
@@ -41,6 +43,29 @@ public class UserPersistenceAdapter implements UserPort {
         }
     }
 
+    public User updateUser(User user) throws DomainException {
+        UserEntity existingEntity = userJpaRepository.findById(user.getId())
+                .orElseThrow(() -> new DomainException("Usuario no encontrado"));
+        try {
+            existingEntity.setTypeDocument(user.getTypeDocument());
+            existingEntity.setDocumentNumber(user.getDocumentNumber());
+            existingEntity.setFirstName(user.getFirstName());
+            existingEntity.setSecondName(user.getSecondName());
+            existingEntity.setLastName(user.getLastName());
+            existingEntity.setSecondLastName(user.getSecondLastName());
+            existingEntity.setEmail(user.getEmail());
+            existingEntity.setPhone(user.getPhone());
+            existingEntity.setStatus(user.getStatus());
+            existingEntity.setUpdatedAt(user.getUpdatedAt());
+
+            UserEntity updatedEntity = userJpaRepository.save(existingEntity);
+            return persistenceMapper.toDomain(updatedEntity);
+        } catch (Exception e) {
+            e.printStackTrace(); // importante para ver el error real
+            throw new DomainException("Error al guardar usuario: " + e.getMessage());
+        }
+    }
+
     @Override
     public Optional<User> findUserById(Long id) {
         Optional<UserEntity> optionalEntity = userJpaRepository.findById(id);
@@ -55,18 +80,34 @@ public class UserPersistenceAdapter implements UserPort {
         }
     }
 
+
+    @Override
+    public Optional<UserResponse> findUserByIdAllData(Long id) {
+        Optional<UserEntity> optionalEntity = userJpaRepository.findById(id);
+        if (optionalEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
+        try {
+            optionalEntity.get().setPassword("null");
+            return Optional.of(persistenceMapper.toDomainResponse(optionalEntity.get()));
+        } catch (DomainException e) {
+            throw new RuntimeException("Error al convertir UserEntity a dominio User", e);
+        }
+    }
+
     @Override
     public void deleteUserById(Long id) {
         userJpaRepository.deleteById(id);
     }
 
     @Override
-    public List<User> findAllUsers() {
+    public List<UserResponse> findAllUsers() {
         List<UserEntity> entities = userJpaRepository.findAll();
         return entities.stream()
                 .map(entity -> {
                     try {
-                        return persistenceMapper.toDomain(entity);
+                        return persistenceMapper.toDomainResponse(entity);
                     } catch (DomainException e) {
                         throw new RuntimeException("Error al convertir lista de UserEntity a dominio User", e);
                     }
@@ -93,7 +134,7 @@ public class UserPersistenceAdapter implements UserPort {
     }
 
     @Override
-    public Page<User> findUsersWithPaginationAndSorting(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public Page<UserResponse> findUsersWithPaginationAndSorting(int page, int size, String sortField, String sortDirection, String searchTerm) {
         Sort sort = Sort.unsorted();
 
         if (sortField != null && !sortField.isEmpty()) {
@@ -111,7 +152,7 @@ public class UserPersistenceAdapter implements UserPort {
             return userJpaRepository.findAll(spec, pageable)
                     .map(entity -> {
                         try {
-                            return persistenceMapper.toDomain(entity);
+                            return persistenceMapper.toDomainResponse(entity);
                         } catch (DomainException e) {
                             throw new RuntimeException("Error mapping user entity to domain", e);
                         }
@@ -121,7 +162,7 @@ public class UserPersistenceAdapter implements UserPort {
         return userJpaRepository.findAll(pageable)
                 .map(entity -> {
                     try {
-                        return persistenceMapper.toDomain(entity);
+                        return persistenceMapper.toDomainResponse(entity);
                     } catch (DomainException e) {
                         throw new RuntimeException("Error mapping user entity to domain", e);
                     }

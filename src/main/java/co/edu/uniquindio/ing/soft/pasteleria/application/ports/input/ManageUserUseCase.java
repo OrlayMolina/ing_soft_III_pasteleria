@@ -13,7 +13,7 @@ import java.util.List;
 public interface ManageUserUseCase {
     MensajeDTO<String> createUser(CreateUserCommand command) throws DomainException;
 
-    MensajeDTO<UserResponse> updateUser(Long id, UpdateUserCommand command);
+    MensajeDTO<String> updateUser(Long id, UpdateUserCommand command);
 
     MensajeDTO<Void> deleteUser(Long id);
 
