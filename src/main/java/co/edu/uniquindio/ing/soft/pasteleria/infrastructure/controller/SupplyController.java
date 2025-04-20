@@ -23,8 +23,8 @@ public class SupplyController {
     private final ManageSupplyUseCase supplyUseCase;
 
     @PostMapping
-    public ResponseEntity<MensajeDTO<SupplyResponse>> createSupply(@RequestBody @Valid CreateSupplyCommand command) throws DomainException {
-        MensajeDTO<SupplyResponse> response = supplyUseCase.createSupply(command);
+    public ResponseEntity<MensajeDTO<String>> createSupply(@RequestBody @Valid CreateSupplyCommand command) throws DomainException {
+        MensajeDTO<String> response = supplyUseCase.createSupply(command);
         return ResponseEntity.ok(response);
     }
 

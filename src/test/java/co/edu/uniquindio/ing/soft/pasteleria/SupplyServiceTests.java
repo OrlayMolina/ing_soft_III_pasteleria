@@ -6,7 +6,6 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateSuppl
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplierResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageSupplierUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageSupplyUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
@@ -99,7 +98,7 @@ public class SupplyServiceTests {
                         userGenerate.getId()
                 );
 
-                MensajeDTO<SupplyResponse> supplyResponse = manageSupplyUseCase.createSupply(supplyCommand);
+                MensajeDTO<String> supplyResponse = manageSupplyUseCase.createSupply(supplyCommand);
                 Assertions.assertNotNull(supplyResponse);
                 Assertions.assertFalse(supplyResponse.error());
                 Assertions.assertNotNull(supplyResponse.respuesta());
@@ -170,7 +169,7 @@ public class SupplyServiceTests {
                         userGenerate.getId()
                 );
 
-                MensajeDTO<SupplyResponse> supplyResponse = manageSupplyUseCase.createSupply(command);
+                MensajeDTO<String> supplyResponse = manageSupplyUseCase.createSupply(command);
                 Assertions.assertNotNull(supplyResponse);
                 Assertions.assertFalse(supplyResponse.error());
                 Assertions.assertNotNull(supplyResponse.respuesta());

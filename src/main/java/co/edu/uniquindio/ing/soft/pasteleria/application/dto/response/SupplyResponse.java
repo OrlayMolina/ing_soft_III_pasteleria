@@ -10,6 +10,7 @@ public record SupplyResponse(
         LocalDate entryDate,
         LocalDate expirationDate,
         int quantity,
+        int minimumStock,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Long userModify) {

@@ -36,7 +36,7 @@ public class SupplyService implements ManageSupplyUseCase {
     private final SupplierPort supplierPort;
 
     @Override
-    public MensajeDTO<SupplyResponse> createSupply(CreateSupplyCommand command) throws DomainException {
+    public MensajeDTO<String> createSupply(CreateSupplyCommand command) throws DomainException {
         try {
             Optional<SupplyEntity> supplyOptional = supplyJpaRepository.findByName(command.name());
             if (supplyOptional.isPresent()) {
@@ -46,18 +46,15 @@ public class SupplyService implements ManageSupplyUseCase {
             // Validar que el proveedor existe y obtener su ID numérico
             Long supplierId = supplierPort.getSupplierIdBySupplierID(command.supplierID());
             if (supplierId == null) {
-                throw new DomainException("El proveedor con ID " + command.supplierID() + " no existe.");
+                return new MensajeDTO<>(true, "El proveedor con ID " + command.supplierID() + " no existe.");
             }
-
             // Usar el método actualizado, pasando el supplierId
             Supply supply = supplyDtoMapper.toModel(command, supplierId);
 
             Supply savedSupply = supplyPort.saveSupply(supply);
-            return new MensajeDTO<>(false, supplyDtoMapper.toResponse(savedSupply));
-        } catch (DomainException e) {
-            throw e; // Propaga la excepción de dominio
+            return new MensajeDTO<>(false, "Insumo creado con exito");
         } catch (Exception e) {
-            throw new RuntimeException("Error al crear el insumo: " + e.getMessage(), e);
+            return new MensajeDTO<>(true, "Error al crear el insumo: " + e.getMessage());
         }
     }
 

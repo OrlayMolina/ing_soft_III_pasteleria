@@ -35,6 +35,7 @@ public class SupplyDtoMapper {
                 supply.getEntryDate(),
                 supply.getExpirationDate(),
                 supply.getQuantity(),
+                supply.getMinimumStock(),
                 supply.getCreatedAt(),
                 supply.getUpdatedAt(),
                 supply.getUserModify()

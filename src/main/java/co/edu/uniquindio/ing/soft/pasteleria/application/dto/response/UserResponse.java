@@ -6,6 +6,7 @@ import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.TypeDocument;
 import java.time.LocalDateTime;
 
 public record UserResponse(
+        Long id,
         TypeDocument typeDocument,
         String documentNumber,
         String phone,

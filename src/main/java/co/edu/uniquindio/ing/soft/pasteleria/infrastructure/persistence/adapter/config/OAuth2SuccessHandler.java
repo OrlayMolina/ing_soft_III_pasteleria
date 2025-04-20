@@ -1,6 +1,5 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config;
 
-import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
 import jakarta.servlet.http.HttpServletRequest;

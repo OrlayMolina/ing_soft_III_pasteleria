@@ -4,14 +4,12 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.PageResponse;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.mapper.UserDtoMapper;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.UserPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
-import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supply;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
@@ -176,9 +174,9 @@ public class UserService implements ManageUserUseCase {
         Page<User> usersPage = userPort.findUsersWithPaginationAndSorting(page, size, sort, direction, search);
 
         List<UserResponse> items = usersPage.getContent().stream()
-                .map(supply -> {
+                .map(user -> {
                     try {
-                        return userDtoMapper.toResponse(supply);
+                        return userDtoMapper.toResponse(user);
                     } catch (DomainException e) {
                         throw new RuntimeException("Error al mapear usuario a DTO", e);
                     }

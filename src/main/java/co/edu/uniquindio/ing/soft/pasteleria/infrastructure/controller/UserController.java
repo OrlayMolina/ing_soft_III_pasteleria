@@ -4,7 +4,6 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.UpdateUserCommand;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.PageResponse;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.SupplyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserSimplifyResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
@@ -28,7 +27,7 @@ public class UserController {
     public ResponseEntity<MensajeDTO<String>> createUser(@Valid @RequestBody CreateUserCommand command) {
         try {
             MensajeDTO<String> response = manageUserUseCase.createUser(command);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            return ResponseEntity.ok(response);
         } catch (DomainException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensajeDTO<>(true, e.getMessage()));
         } catch (Exception e) {

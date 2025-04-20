@@ -2,7 +2,6 @@ package co.edu.uniquindio.ing.soft.pasteleria;
 
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.MensajeDTO;
 import co.edu.uniquindio.ing.soft.pasteleria.application.dto.request.CreateUserCommand;
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.input.ManageUserUseCase;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.Status;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.TypeDocument;

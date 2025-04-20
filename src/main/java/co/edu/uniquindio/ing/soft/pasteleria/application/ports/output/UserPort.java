@@ -1,7 +1,6 @@
 package co.edu.uniquindio.ing.soft.pasteleria.application.ports.output;
 
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
-import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Supply;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import org.springframework.data.domain.Page;
 
