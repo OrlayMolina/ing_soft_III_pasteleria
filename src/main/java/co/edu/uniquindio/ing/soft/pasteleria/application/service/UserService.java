@@ -74,7 +74,7 @@ public class UserService implements ManageUserUseCase {
             }
 
             User existingUser = optionalUser.get();
-            existingUser.setEmail(command.id().toString());
+            existingUser.setId(command.id());
             existingUser.setTypeDocument(command.typeDocument());
             existingUser.setDocumentNumber(command.documentNumber());
             existingUser.setPhone(command.phone());
