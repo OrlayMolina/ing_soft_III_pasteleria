@@ -19,13 +19,14 @@ public class Supply {
     private LocalDate entryDate;
     private LocalDate expirationDate;
     private int quantity;
+    private String unitMeasurement;
     private int minimumStock;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long userModify;
 
     public Supply(String name, String supplierDocument, Long supplierId, Double price, LocalDate entryDate,
-                  LocalDate expirationDate, int quantity, int minimumStock, LocalDateTime createdAt,
+                  LocalDate expirationDate, int quantity, String unitMeasurement, int minimumStock, LocalDateTime createdAt,
                   LocalDateTime updatedAt, Long userModify) {
         this.name = name;
         this.supplierDocument = supplierDocument;
@@ -34,6 +35,7 @@ public class Supply {
         this.entryDate = entryDate;
         this.expirationDate = expirationDate;
         this.quantity = quantity;
+        this.unitMeasurement = unitMeasurement;
         this.minimumStock = minimumStock;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -41,7 +43,7 @@ public class Supply {
     }
 
     public Supply(Long id, String name, String supplierDocument, Long supplierId, Double price,
-                  LocalDate entryDate, LocalDate expirationDate, int quantity, int minimumStock,
+                  LocalDate entryDate, LocalDate expirationDate, int quantity, String unitMeasurement, int minimumStock,
                   LocalDateTime createdAt, LocalDateTime updatedAt, Long userModify) {
         this.id = id;
         this.name = name;
@@ -51,6 +53,7 @@ public class Supply {
         this.entryDate = entryDate;
         this.expirationDate = expirationDate;
         this.quantity = quantity;
+        this.unitMeasurement = unitMeasurement;
         this.minimumStock = minimumStock;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

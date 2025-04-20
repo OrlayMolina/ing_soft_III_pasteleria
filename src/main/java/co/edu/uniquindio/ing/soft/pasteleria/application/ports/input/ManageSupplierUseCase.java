@@ -20,7 +20,7 @@ public interface ManageSupplierUseCase {
 
     MensajeDTO<List<SupplierResponse>> searchSupplier();
 
-    MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliers(int page, int size);
+    MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliersByPageAndSize(int page, int size);
 
     MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliers(int page, int size, String sort, String direction, String search);
 }

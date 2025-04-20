@@ -171,6 +171,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDate.now(),
                                 LocalDate.now().plusMonths(6),
                                 50,
+                                "Gramos",
                                 10,
                                 LocalDateTime.now(),
                                 LocalDateTime.now(),
@@ -186,6 +187,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDate.now(),
                                 LocalDate.now().plusWeeks(3),
                                 120,
+                                "Gramos",
                                 24,
                                 LocalDateTime.now(),
                                 LocalDateTime.now(),
@@ -201,6 +203,7 @@ public class DataInitializer implements CommandLineRunner {
                                 LocalDate.now(),
                                 LocalDate.now().plusDays(15),
                                 40,
+                                "Gramos",
                                 8,
                                 LocalDateTime.now(),
                                 LocalDateTime.now(),
@@ -233,7 +236,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private void createSupplyIfNotExists(String name, Double price, String supplierID,
                                          LocalDate entryDate, LocalDate expirationDate,
-                                         int quantity, int minimumStock,
+                                         int quantity, String unitMeasurement, int minimumStock,
                                          LocalDateTime createdAt, LocalDateTime updatedAt,
                                          Long userModify) {
         try {
@@ -244,6 +247,7 @@ public class DataInitializer implements CommandLineRunner {
                     entryDate,
                     expirationDate,
                     quantity,
+                    unitMeasurement,
                     minimumStock,
                     createdAt,
                     updatedAt,

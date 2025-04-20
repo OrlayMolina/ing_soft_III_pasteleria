@@ -10,6 +10,7 @@ public record SupplyResponse(
         LocalDate entryDate,
         LocalDate expirationDate,
         int quantity,
+        String unitMeasurement,
         int minimumStock,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,

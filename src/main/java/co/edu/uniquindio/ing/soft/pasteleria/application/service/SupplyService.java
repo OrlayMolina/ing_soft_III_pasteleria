@@ -70,6 +70,7 @@ public class SupplyService implements ManageSupplyUseCase {
             existingSupply.setName(command.name());
             existingSupply.setPrice(command.price());
             existingSupply.setQuantity(command.quantity());
+            existingSupply.setUnitMeasurement(command.unitMeasurement());
             existingSupply.setEntryDate(command.entryDate());
             existingSupply.setExpirationDate(command.expirationDate());
             existingSupply.setMinimumStock(command.minimumStock());

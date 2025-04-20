@@ -25,6 +25,7 @@ public record UpdateSupplyCommand(
 
         @Positive(message = "La cantidad debe ser un valor positivo")
         int quantity,
+        String unitMeasurement,
 
         @Min(value = 1, message = "El stock mínimo debe ser mayor a 0")
         int minimumStock,

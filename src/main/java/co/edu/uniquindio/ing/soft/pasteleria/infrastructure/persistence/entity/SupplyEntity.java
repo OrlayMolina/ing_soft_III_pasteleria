@@ -39,6 +39,8 @@ public class SupplyEntity {
 
     @Column(name = "quantity")
     private int quantity;
+    @Column(name = "unit_measurement")
+    private String unitMeasurement;
 
     @Column(name = "minimum_stock", nullable = false)
     private int minimumStock = 20;
