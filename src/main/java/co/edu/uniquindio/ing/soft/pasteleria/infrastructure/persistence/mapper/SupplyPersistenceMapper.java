@@ -19,6 +19,7 @@ public class SupplyPersistenceMapper {
         entity.setEntryDate(supply.getEntryDate());
         entity.setExpirationDate(supply.getExpirationDate());
         entity.setQuantity(supply.getQuantity());
+        entity.setUnitMeasurement(supply.getUnitMeasurement());
         entity.setMinimumStock(supply.getMinimumStock());
         entity.setCreatedAt(supply.getCreatedAt());
         entity.setUpdatedAt(supply.getUpdatedAt());
@@ -61,6 +62,7 @@ public class SupplyPersistenceMapper {
                 entity.getEntryDate(),
                 entity.getExpirationDate(),
                 entity.getQuantity(),
+                entity.getUnitMeasurement(),
                 entity.getMinimumStock(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),

@@ -249,7 +249,7 @@ public class SupplierService implements ManageSupplierUseCase {
     }
 
     @Override
-    public MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliers(int page, int size) {
+    public MensajeDTO<PageResponse<SupplierResponse>> getPagedSuppliersByPageAndSize(int page, int size) {
         try {
             Page<Supplier> suppliersPage = supplierPort.findSuppliersWithPagination(page, size);
 

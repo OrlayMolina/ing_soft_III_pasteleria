@@ -28,6 +28,7 @@ public record CreateSupplyCommand(
         @NotNull(message = "La cantidad no puede ser nula")
         @Min(value = 0, message = "La cantidad no puede ser negativa")
         int quantity,
+        String unitMeasurement,
 
         @Min(value = 1, message = "El stock mínimo debe ser mayor a 0")
         int minimumStock,
