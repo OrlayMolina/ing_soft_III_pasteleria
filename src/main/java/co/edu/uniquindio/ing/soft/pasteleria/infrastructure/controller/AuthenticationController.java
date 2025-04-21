@@ -34,5 +34,15 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/recuperar-contrasena")
+    public ResponseEntity<MensajeDTO<String>> resetPassword(@RequestBody LoginDTO loginDTO) {
+        try {
+            String msj = authService.resetPassword(loginDTO);
+            return ResponseEntity.ok(new MensajeDTO<>(false, "Conectó"));
+        } catch (DomainException e) {
+            return ResponseEntity.status(NOT_FOUND).body(new MensajeDTO<>(true, "Error enviando correo de contraseña"));
+        }
+    }
+
 }
 
