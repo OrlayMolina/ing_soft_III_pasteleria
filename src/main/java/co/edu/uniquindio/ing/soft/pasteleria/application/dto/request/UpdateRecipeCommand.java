@@ -8,11 +8,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.LocalDateTime;
 
-public record CreateRecipeCommand(
-
+public record UpdateRecipeCommand(
+        Long id,
         @NotBlank(message = "El nombre de la receta es requerido")
         String name,
-
         String description,
 
         @PositiveOrZero(message = "El tiempo de preparación debe ser mayor o igual a cero")
@@ -20,17 +19,12 @@ public record CreateRecipeCommand(
 
         @Positive(message = "La cantidad de porciones debe ser mayor que cero")
         Integer portions,
-
         Status status,
-
-        @NotNull(message = "La fecha de creación es requerida")
-        LocalDateTime createdAt,
 
         @NotNull(message = "La fecha de actualización es requerida")
         LocalDateTime updatedAt,
 
         Long createdBy,
-
         Long userModify
 ) {
 }

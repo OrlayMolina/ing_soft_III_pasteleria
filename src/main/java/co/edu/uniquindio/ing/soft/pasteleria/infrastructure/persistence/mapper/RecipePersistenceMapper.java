@@ -1,9 +1,8 @@
 package co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.mapper;
 
-import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserResponse;
+import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.RecipeResponse;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.Recipe;
-import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.RecipeEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
@@ -77,28 +76,23 @@ public class RecipePersistenceMapper {
 
     }
 
-//    public UserResponse toDomainResponse(UserEntity entity) throws DomainException {
-//        if (entity == null) {
-//            return null;
-//        }
-//
-//        return new UserResponse(
-//                entity.getId(),
-//                entity.getTypeDocument(),
-//                entity.getDocumentNumber(),
-//                entity.getPhone(),
-//                entity.getPosition(),
-//                entity.getSalary(),
-//                entity.getFirstName(),
-//                entity.getSecondName(),
-//                entity.getLastName(),
-//                entity.getSecondLastName(),
-//                entity.getEmail(),
-//                entity.getPassword(),
-//                entity.getStatus(),
-//                entity.getIsAdmin(),
-//                entity.getCreatedAt(),
-//                entity.getUpdatedAt()
-//        );
-//    }
+    public RecipeResponse toDomainResponse(RecipeEntity entity) throws DomainException {
+        if (entity == null) {
+            return null;
+        }
+        RecipeResponse recipeResponse = new RecipeResponse(
+                entity.getId(),
+                entity.getName(),
+                entity.getDescription(),
+                entity.getPortions(),
+                entity.getPreparationTimeMinutes(),
+                entity.getStatus(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt(),
+                entity.getModifiedBy() != null ? entity.getModifiedBy().getId() : null,
+                entity.getCreatedBy() != null ? entity.getCreatedBy().getId() : null
+        );
+
+        return recipeResponse;
+    }
 }

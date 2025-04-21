@@ -3,7 +3,6 @@ package co.edu.uniquindio.ing.soft.pasteleria.application.dto.request;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.Status;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.enums.TypeDocument;
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.Null;
 
 import java.time.LocalDateTime;
 

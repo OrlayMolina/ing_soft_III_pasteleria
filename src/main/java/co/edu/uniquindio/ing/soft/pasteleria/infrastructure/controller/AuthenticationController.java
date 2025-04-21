@@ -33,6 +33,6 @@ public class AuthenticationController {
             return ResponseEntity.status(NOT_FOUND).body(new MensajeDTO<>(true, new TokenDTO(e.getMessage())));
         }
     }
-    
+
 }
 
