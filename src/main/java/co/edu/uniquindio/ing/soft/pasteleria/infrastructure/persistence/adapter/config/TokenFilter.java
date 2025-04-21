@@ -46,6 +46,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 requestURI.startsWith("/api/supply") ||
                 requestURI.startsWith("/api/suppliers") ||
                 requestURI.startsWith("/api/users") ||
+                requestURI.startsWith("/api/recipes") ||
                 requestURI.startsWith("/api/purchase-invoice");
 
         if (requiereAutenticacion) {

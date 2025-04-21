@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.adapter.config.CryptoPassword.encriptarPassword;
 
@@ -74,7 +73,7 @@ public class UserService implements ManageUserUseCase {
             }
 
             User existingUser = optionalUser.get();
-            existingUser.setEmail(command.id().toString());
+            existingUser.setId(command.id());
             existingUser.setTypeDocument(command.typeDocument());
             existingUser.setDocumentNumber(command.documentNumber());
             existingUser.setPhone(command.phone());
@@ -96,7 +95,7 @@ public class UserService implements ManageUserUseCase {
             UserResponse response = userDtoMapper.toResponse(updatedUser);
 
             return new MensajeDTO<>(false, "Usuario actualizado con exito");
-        }  catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw e; // Importante: relanzar para que se haga rollback real
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar el usuario", e);

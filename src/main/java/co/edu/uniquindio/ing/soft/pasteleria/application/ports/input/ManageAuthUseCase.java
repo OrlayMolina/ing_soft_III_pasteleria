@@ -6,4 +6,7 @@ import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 
 public interface ManageAuthUseCase {
     TokenDTO logIn(LoginDTO loginDTO) throws DomainException;
+
+    String resetPassword(LoginDTO loginDTO) throws DomainException;
+
 }

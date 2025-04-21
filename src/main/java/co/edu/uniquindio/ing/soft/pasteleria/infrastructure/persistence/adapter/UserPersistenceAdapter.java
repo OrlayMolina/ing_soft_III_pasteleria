@@ -4,7 +4,6 @@ import co.edu.uniquindio.ing.soft.pasteleria.application.dto.response.UserRespon
 import co.edu.uniquindio.ing.soft.pasteleria.application.ports.output.UserPort;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.exception.DomainException;
 import co.edu.uniquindio.ing.soft.pasteleria.domain.model.User;
-import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.SupplyEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.entity.UserEntity;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.mapper.UserPersistenceMapper;
 import co.edu.uniquindio.ing.soft.pasteleria.infrastructure.persistence.repository.UserJpaRepository;
